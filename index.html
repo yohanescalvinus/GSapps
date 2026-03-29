@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Green Screen Studio - Perfect Aspect Ratio</title>
+    <title>Green Screen Studio - Fixed Preview Layout</title>
     <style>
         * {
             margin: 0;
@@ -23,8 +23,6 @@
             --text-secondary: #b0b0b0;
             --text-tertiary: #6c6c6c;
             --accent-color: #ffffff;
-            --accent-secondary: #e0e0e0;
-            --card-bg: rgba(20, 20, 20, 0.7);
             --button-primary: #2a2a2a;
             --button-secondary: #1f1f1f;
             --status-bg: rgba(0, 0, 0, 0.6);
@@ -47,7 +45,6 @@
             --button-primary: #e8e8e8;
             --button-secondary: #f5f5f5;
             --status-bg: rgba(255, 255, 255, 0.85);
-            --shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
             --slider-track: #e0e0e0;
             --slider-thumb: #1a1a1a;
         }
@@ -56,7 +53,7 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
             background: var(--bg-primary);
             min-height: 100vh;
-            padding: 12px;
+            padding: 16px;
             transition: all 0.3s ease;
             color: var(--text-primary);
         }
@@ -70,7 +67,7 @@
         }
 
         .container {
-            max-width: 100%;
+            max-width: 1400px;
             margin: 0 auto;
         }
 
@@ -78,15 +75,15 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 16px;
+            margin-bottom: 20px;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 12px;
             padding-bottom: 12px;
             border-bottom: 1px solid var(--glass-border);
         }
 
         h1 {
-            font-size: clamp(1rem, 4.5vw, 1.4rem);
+            font-size: clamp(1rem, 4vw, 1.4rem);
             font-weight: 500;
             display: flex;
             align-items: center;
@@ -129,27 +126,28 @@
             font-weight: 500;
         }
 
+        /* Layout Utama - Fixed Preview Size */
         .main-layout {
             display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin-bottom: 12px;
+            gap: 16px;
+            margin-bottom: 16px;
         }
 
-        /* Panel Hasil - Mengikuti Aspect Ratio Webcam */
+        /* Panel Hasil - Ukuran Tetap Maksimal */
         .result-panel {
             background: var(--glass-bg);
             backdrop-filter: blur(16px);
             border-radius: 20px;
-            padding: 12px;
+            padding: 16px;
             border: 1px solid var(--glass-border);
-            width: 100%;
+            flex: 1.5;
+            min-width: 0;
         }
 
         .result-panel h2 {
             text-align: center;
-            margin-bottom: 10px;
-            font-size: clamp(0.85rem, 3.5vw, 1rem);
+            margin-bottom: 12px;
+            font-size: clamp(0.85rem, 3vw, 1rem);
             font-weight: 500;
             display: flex;
             align-items: center;
@@ -157,7 +155,7 @@
             gap: 8px;
         }
 
-        /* Container result - akan diatur dinamis sesuai aspect ratio webcam */
+        /* Container dengan ukuran tetap dan object-fit contain */
         .result-container {
             position: relative;
             width: 100%;
@@ -165,27 +163,36 @@
             border-radius: 12px;
             overflow: hidden;
             border: 1px solid var(--glass-border);
+            aspect-ratio: 16 / 9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .result-container canvas {
-            width: 100%;
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
             height: auto;
             display: block;
+            object-fit: contain;
             background: var(--bg-secondary);
         }
 
+        /* Grid Sumber - Ukuran Tetap */
         .source-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
             gap: 12px;
-            width: 100%;
+            min-width: 0;
         }
 
         .source-panel, .background-panel {
             background: var(--glass-bg);
             backdrop-filter: blur(16px);
             border-radius: 16px;
-            padding: 10px;
+            padding: 12px;
             border: 1px solid var(--glass-border);
         }
 
@@ -199,6 +206,7 @@
             color: var(--text-secondary);
         }
 
+        /* Preview container dengan ukuran tetap */
         .webcam-container, .bg-container {
             position: relative;
             width: 100%;
@@ -206,10 +214,16 @@
             border-radius: 10px;
             overflow: hidden;
             border: 1px solid var(--glass-border);
+            aspect-ratio: 16 / 9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .webcam-container video, .bg-container canvas {
-            width: 100%;
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
             height: auto;
             display: block;
             object-fit: contain;
@@ -232,26 +246,26 @@
             background: var(--glass-bg);
             backdrop-filter: blur(16px);
             border-radius: 20px;
-            padding: 12px;
+            padding: 16px;
             margin-top: 8px;
             border: 1px solid var(--glass-border);
         }
 
         .control-tabs {
             display: flex;
-            gap: 6px;
-            margin-bottom: 16px;
+            gap: 8px;
+            margin-bottom: 20px;
             flex-wrap: wrap;
         }
 
         .tab-btn {
             flex: 1;
-            padding: 8px 6px;
+            padding: 10px 8px;
             background: transparent;
             border: 1px solid var(--glass-border);
             color: var(--text-secondary);
             border-radius: 30px;
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             cursor: pointer;
             transition: all 0.3s;
             font-weight: 500;
@@ -272,12 +286,12 @@
         }
 
         .control-item {
-            margin-bottom: 14px;
+            margin-bottom: 16px;
         }
 
         .control-item label {
             display: block;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
             color: var(--text-primary);
             font-weight: 500;
             font-size: 0.8rem;
@@ -329,8 +343,8 @@
         .button-group {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-top: 16px;
+            gap: 12px;
+            margin-top: 20px;
         }
 
         button {
@@ -359,7 +373,7 @@
         .info-text {
             color: var(--text-tertiary);
             font-size: 0.65rem;
-            margin-top: 5px;
+            margin-top: 6px;
             text-align: center;
         }
 
@@ -380,7 +394,26 @@
             border: 1px solid var(--glass-border);
         }
 
-        @media (orientation: portrait) {
+        /* Responsive */
+        @media (max-width: 768px) {
+            body {
+                padding: 12px;
+            }
+            .main-layout {
+                flex-direction: column;
+            }
+            .source-grid {
+                flex-direction: row;
+            }
+            .source-panel, .background-panel {
+                flex: 1;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .source-grid {
+                flex-direction: column;
+            }
             .orientation-guide {
                 display: flex;
                 align-items: center;
@@ -392,31 +425,24 @@
             .main-layout {
                 flex-direction: row;
             }
-            .result-panel {
-                flex: 1.5;
-            }
-            .source-grid {
-                flex: 1;
-                display: flex;
-                flex-direction: column;
-                gap: 12px;
-            }
         }
 
-        @media (max-width: 480px) {
-            body {
-                padding: 8px;
-            }
-            .source-grid {
-                gap: 8px;
-            }
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-tertiary);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--text-tertiary);
+            border-radius: 2px;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>green screen <span class="resolution-badge">adaptive</span></h1>
+            <h1>green screen <span class="resolution-badge">studio</span></h1>
             <div class="theme-toggle">
                 <button class="theme-btn active" onclick="setTheme('dark')">dark</button>
                 <button class="theme-btn" onclick="setTheme('light')">light</button>
@@ -425,25 +451,28 @@
 
         <div class="main-layout">
             <div class="result-panel glass-card">
-                <h2>result <span class="resolution-badge" id="resultRatioBadge">auto</span></h2>
-                <div class="result-container" id="resultContainer">
+                <h2>result <span class="resolution-badge" id="resultRatioBadge">preview</span></h2>
+                <div class="result-container">
                     <canvas id="resultCanvas"></canvas>
                 </div>
+                <div class="info-text">hasil green screen | capture dalam resolusi asli</div>
             </div>
             
             <div class="source-grid">
                 <div class="source-panel glass-card">
-                    <h3>webcam</h3>
-                    <div class="webcam-container" id="webcamContainer">
+                    <h3>webcam input</h3>
+                    <div class="webcam-container">
                         <video id="webcam" autoplay playsinline muted></video>
                     </div>
+                    <div class="info-text" id="webcamInfo">menunggu webcam...</div>
                 </div>
                 
                 <div class="background-panel glass-card">
                     <h3>background</h3>
-                    <div class="bg-container" id="bgContainer">
+                    <div class="bg-container">
                         <canvas id="backgroundCanvas"></canvas>
                     </div>
+                    <div class="info-text">upload & adjust background</div>
                 </div>
             </div>
         </div>
@@ -471,13 +500,13 @@
                     <input type="range" id="smoothness" min="0" max="0.3" step="0.01" value="0.15">
                 </div>
                 <div class="button-group">
-                    <button onclick="resetBasicDefaults()">reset</button>
+                    <button onclick="resetBasicDefaults()">reset default</button>
                 </div>
             </div>
 
             <div id="tab-advanced" class="tab-content">
                 <div class="control-item">
-                    <label>quality</label>
+                    <label>quality (processing)</label>
                     <select id="qualityMode">
                         <option value="high">high</option>
                         <option value="medium" selected>medium</option>
@@ -507,7 +536,7 @@
                     </select>
                 </div>
                 <div class="button-group">
-                    <button onclick="resetAdvancedDefaults()">reset</button>
+                    <button onclick="resetAdvancedDefaults()">reset default</button>
                 </div>
             </div>
 
@@ -534,7 +563,7 @@
                 </div>
                 <div class="button-group">
                     <button onclick="resetBackgroundTransform()">reset transform</button>
-                    <button class="btn-capture" onclick="captureResult()">capture</button>
+                    <button class="btn-capture" onclick="captureResult()">capture 2K</button>
                 </div>
             </div>
         </div>
@@ -557,18 +586,20 @@
         let fpsInterval = 1000 / 15;
         let flipHorizontal = true;
         
-        let processWidth = 1280;
-        let processHeight = 720;
+        // Canvas untuk processing (ukuran asli webcam)
+        let processingCanvas = null;
+        let processingCtx = null;
+        
+        // Canvas untuk display (scaled)
+        let resultCanvas = null;
+        let resultCtx = null;
+        let bgCanvas = null;
+        let bgCtx = null;
         
         // ==================== DOM ELEMENTS ====================
         const webcam = document.getElementById('webcam');
-        const bgCanvas = document.getElementById('backgroundCanvas');
-        const resultCanvas = document.getElementById('resultCanvas');
-        const resultContainer = document.getElementById('resultContainer');
-        const webcamContainer = document.getElementById('webcamContainer');
-        const bgContainer = document.getElementById('bgContainer');
-        
-        let bgCtx, resultCtx;
+        const bgCanvasElem = document.getElementById('backgroundCanvas');
+        const resultCanvasElem = document.getElementById('resultCanvas');
         
         // ==================== THEME ====================
         function setTheme(theme) {
@@ -587,61 +618,44 @@
         const savedTheme = localStorage.getItem('theme');
         if (savedTheme === 'light') setTheme('light');
         
-        // ==================== UPDATE ASPECT RATIO ====================
-        function updateAspectRatios() {
-            if (videoWidth === 0 || videoHeight === 0) return;
+        // ==================== UPDATE PREVIEW ====================
+        function updatePreviewSize() {
+            if (!resultCanvasElem || !bgCanvasElem) return;
             
-            const aspectRatio = videoWidth / videoHeight;
-            const containerWidth = resultContainer.clientWidth;
-            const containerHeight = containerWidth / aspectRatio;
-            
-            // Set result canvas size sesuai aspect ratio video
-            resultCanvas.width = videoWidth;
-            resultCanvas.height = videoHeight;
-            resultCanvas.style.width = '100%';
-            resultCanvas.style.height = 'auto';
-            
-            // Set background canvas size sama dengan video
-            bgCanvas.width = videoWidth;
-            bgCanvas.height = videoHeight;
-            bgCanvas.style.width = '100%';
-            bgCanvas.style.height = 'auto';
-            
-            // Update background image jika ada
-            if (bgImageObj) {
-                drawBackgroundWithTransform();
-            } else {
-                drawDefaultBackground();
+            // Result canvas tetap ukuran asli untuk kualitas capture
+            if (videoWidth > 0 && videoHeight > 0) {
+                resultCanvasElem.width = videoWidth;
+                resultCanvasElem.height = videoHeight;
+                bgCanvasElem.width = videoWidth;
+                bgCanvasElem.height = videoHeight;
             }
             
-            // Update badge
-            const ratioText = aspectRatio > 1.2 ? 'landscape' : (aspectRatio < 0.9 ? 'portrait' : 'square');
-            document.getElementById('resultRatioBadge').textContent = ratioText;
-            
-            // Adjust container height
-            resultContainer.style.height = 'auto';
-            webcamContainer.style.height = 'auto';
-            bgContainer.style.height = 'auto';
+            // Tampilkan info webcam
+            document.getElementById('webcamInfo').textContent = 
+                videoWidth > 0 ? `${videoWidth}×${videoHeight} | ${videoWidth/videoHeight > 1.2 ? 'landscape' : 'portrait'}` : 'menunggu webcam...';
         }
         
         // ==================== DRAW BACKGROUND ====================
-        function drawDefaultBackground() {
+        function drawBackgroundWithTransform() {
             if (!bgCtx) return;
+            
             const w = videoWidth || 1280;
             const h = videoHeight || 720;
-            bgCtx.fillStyle = '#1a1a1a';
-            bgCtx.fillRect(0, 0, w, h);
-            bgCtx.fillStyle = '#ffffff';
-            bgCtx.font = `${Math.floor(Math.min(w, h) * 0.05)}px sans-serif`;
-            bgCtx.textAlign = 'center';
-            bgCtx.fillText('background', w/2, h/2);
-        }
-        
-        function drawBackgroundWithTransform() {
-            if (!bgImageObj || !bgCtx) return;
             
-            const w = videoWidth || bgImageObj.width;
-            const h = videoHeight || bgImageObj.height;
+            if (!bgImageObj) {
+                // Default gradient background
+                const gradient = bgCtx.createLinearGradient(0, 0, w, h);
+                gradient.addColorStop(0, '#2a2a2a');
+                gradient.addColorStop(0.5, '#1a1a1a');
+                gradient.addColorStop(1, '#0a0a0a');
+                bgCtx.fillStyle = gradient;
+                bgCtx.fillRect(0, 0, w, h);
+                bgCtx.fillStyle = '#ffffff';
+                bgCtx.font = `${Math.floor(Math.min(w, h) * 0.05)}px sans-serif`;
+                bgCtx.textAlign = 'center';
+                bgCtx.fillText('background', w/2, h/2);
+                return;
+            }
             
             bgCtx.clearRect(0, 0, w, h);
             
@@ -682,8 +696,6 @@
         
         function resetAdvancedDefaults() {
             document.getElementById('qualityMode').value = 'medium';
-            processWidth = 1280;
-            processHeight = 720;
             document.getElementById('fpsLimit').value = '15';
             fpsInterval = 1000 / 15;
             const oldCameraMode = document.getElementById('cameraMode').value;
@@ -714,7 +726,7 @@
             if (bgImageObj) {
                 drawBackgroundWithTransform();
             } else {
-                drawDefaultBackground();
+                drawBackgroundWithTransform();
             }
             updateStatus("background transform reset");
         }
@@ -744,11 +756,13 @@
                         videoWidth = webcam.videoWidth;
                         videoHeight = webcam.videoHeight;
                         
-                        // Initialize canvases
-                        bgCtx = bgCanvas.getContext('2d');
-                        resultCtx = resultCanvas.getContext('2d');
+                        // Initialize canvases dengan ukuran asli
+                        bgCtx = bgCanvasElem.getContext('2d');
+                        resultCtx = resultCanvasElem.getContext('2d');
                         
-                        updateAspectRatios();
+                        updatePreviewSize();
+                        drawBackgroundWithTransform();
+                        
                         isWebcamReady = true;
                         updateStatus(`camera ready | ${videoWidth}x${videoHeight}`);
                     }).catch(e => updateStatus("error: " + e.message));
@@ -795,12 +809,6 @@
             smoothness = parseFloat(e.target.value);
             document.getElementById('smoothValue').textContent = smoothness.toFixed(2);
         });
-        document.getElementById('qualityMode').addEventListener('change', (e) => {
-            const quality = e.target.value;
-            if (quality === 'high') { processWidth = 1920; processHeight = 1080; }
-            else if (quality === 'medium') { processWidth = 1280; processHeight = 720; }
-            else { processWidth = 640; processHeight = 360; }
-        });
         document.getElementById('fpsLimit').addEventListener('change', (e) => {
             fpsInterval = 1000 / parseInt(e.target.value);
         });
@@ -816,22 +824,22 @@
         document.getElementById('bgZoom').addEventListener('input', (e) => {
             bgZoom = parseInt(e.target.value);
             document.getElementById('zoomValue').textContent = bgZoom + '%';
-            if (bgImageObj) drawBackgroundWithTransform();
+            if (bgImageObj || true) drawBackgroundWithTransform();
         });
         document.getElementById('bgPosX').addEventListener('input', (e) => {
             bgPosX = parseInt(e.target.value);
             document.getElementById('posXValue').textContent = bgPosX;
-            if (bgImageObj) drawBackgroundWithTransform();
+            if (bgImageObj || true) drawBackgroundWithTransform();
         });
         document.getElementById('bgPosY').addEventListener('input', (e) => {
             bgPosY = parseInt(e.target.value);
             document.getElementById('posYValue').textContent = bgPosY;
-            if (bgImageObj) drawBackgroundWithTransform();
+            if (bgImageObj || true) drawBackgroundWithTransform();
         });
         document.getElementById('bgRotate').addEventListener('input', (e) => {
             bgRotate = parseInt(e.target.value);
             document.getElementById('rotateValue').textContent = bgRotate + '°';
-            if (bgImageObj) drawBackgroundWithTransform();
+            if (bgImageObj || true) drawBackgroundWithTransform();
         });
         
         document.getElementById('bgUpload').addEventListener('change', (e) => {
@@ -860,26 +868,28 @@
                 if (now - lastProcessTime < fpsInterval) return true;
                 lastProcessTime = now;
                 
-                const targetW = videoWidth;
-                const targetH = videoHeight;
+                const w = videoWidth;
+                const h = videoHeight;
                 
+                // Create temporary canvas untuk processing
                 const tempCanvas = document.createElement('canvas');
-                tempCanvas.width = targetW;
-                tempCanvas.height = targetH;
+                tempCanvas.width = w;
+                tempCanvas.height = h;
                 const tempCtx = tempCanvas.getContext('2d');
                 
+                // Draw webcam frame
                 if (flipHorizontal) {
                     tempCtx.save();
                     tempCtx.scale(-1, 1);
-                    tempCtx.drawImage(webcam, -targetW, 0, targetW, targetH);
+                    tempCtx.drawImage(webcam, -w, 0, w, h);
                     tempCtx.restore();
                 } else {
-                    tempCtx.drawImage(webcam, 0, 0, targetW, targetH);
+                    tempCtx.drawImage(webcam, 0, 0, w, h);
                 }
                 
-                const webcamData = tempCtx.getImageData(0, 0, targetW, targetH);
-                const bgData = bgCtx.getImageData(0, 0, targetW, targetH);
-                const resultData = resultCtx.createImageData(targetW, targetH);
+                const webcamData = tempCtx.getImageData(0, 0, w, h);
+                const bgData = bgCtx.getImageData(0, 0, w, h);
+                const resultData = resultCtx.createImageData(w, h);
                 
                 const webcamPixels = webcamData.data;
                 const bgPixels = bgData.data;
@@ -934,25 +944,17 @@
             try {
                 const link = document.createElement('a');
                 link.download = `greenscreen-${Date.now()}.png`;
-                resultCanvas.toBlob((blob) => {
+                resultCanvasElem.toBlob((blob) => {
                     const url = URL.createObjectURL(blob);
                     link.href = url;
                     link.click();
                     URL.revokeObjectURL(url);
-                    updateStatus("captured");
+                    updateStatus("captured in original resolution");
                 }, 'image/png', 0.95);
             } catch (error) {
                 updateStatus("capture failed");
             }
         };
-        
-        // ==================== RESIZE OBSERVER ====================
-        const resizeObserver = new ResizeObserver(() => {
-            if (videoWidth > 0) {
-                updateAspectRatios();
-            }
-        });
-        resizeObserver.observe(resultContainer);
         
         // ==================== START ====================
         initWebcam();
