@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Green Screen Studio - Orientation Toggle</title>
+    <title>Green Screen Studio - Button Controls</title>
     <style>
         * {
             margin: 0;
@@ -22,7 +22,7 @@
             --text-primary: #ffffff;
             --text-secondary: #b0b0b0;
             --text-tertiary: #6c6c6c;
-            --accent-color: #ffffff;
+            --accent-color: #4a9eff;
             --accent-secondary: #4a9eff;
             --button-primary: #2a2a2a;
             --button-secondary: #1f1f1f;
@@ -42,7 +42,7 @@
             --text-primary: #1a1a1a;
             --text-secondary: #4a4a4a;
             --text-tertiary: #8a8a8a;
-            --accent-color: #1a1a1a;
+            --accent-color: #0066ff;
             --accent-secondary: #0066ff;
             --button-primary: #e8e8e8;
             --button-secondary: #f5f5f5;
@@ -99,57 +99,33 @@
             flex-wrap: wrap;
         }
 
-        .orientation-toggle {
+        /* Button Style - Bukan Toggle Geser */
+        .mode-buttons {
             display: flex;
-            gap: 4px;
+            gap: 8px;
             background: var(--glass-bg);
             backdrop-filter: blur(10px);
-            border-radius: 40px;
+            border-radius: 50px;
             padding: 4px;
             border: 1px solid var(--glass-border);
         }
 
-        .ori-btn {
+        .mode-btn {
             padding: 8px 20px;
             border: none;
-            border-radius: 36px;
-            cursor: pointer;
-            font-size: 0.8rem;
-            font-weight: 500;
-            background: transparent;
-            color: var(--text-primary);
-            transition: all 0.3s;
-        }
-
-        .ori-btn.active {
-            background: var(--accent-secondary);
-            color: #ffffff;
-        }
-
-        .theme-toggle {
-            display: flex;
-            gap: 6px;
-            background: var(--glass-bg);
-            backdrop-filter: blur(10px);
             border-radius: 40px;
-            padding: 4px;
-            border: 1px solid var(--glass-border);
-        }
-
-        .theme-btn {
-            padding: 8px 16px;
-            border: none;
-            border-radius: 36px;
-            cursor: pointer;
             font-size: 0.75rem;
             font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
             background: transparent;
-            color: var(--text-primary);
+            color: var(--text-secondary);
         }
 
-        .theme-btn.active {
-            background: var(--accent-color);
-            color: var(--bg-primary);
+        .mode-btn.active {
+            background: var(--accent-secondary);
+            color: #ffffff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
         }
 
         .resolution-badge {
@@ -201,15 +177,15 @@
             display: flex;
             align-items: center;
             justify-content: center;
-        }
-
-        /* Dynamic aspect ratio berdasarkan orientasi */
-        .result-container.portrait-mode {
-            aspect-ratio: 9 / 16;
+            transition: aspect-ratio 0.3s ease;
         }
 
         .result-container.landscape-mode {
             aspect-ratio: 16 / 9;
+        }
+
+        .result-container.portrait-mode {
+            aspect-ratio: 9 / 16;
         }
 
         .result-container canvas {
@@ -259,14 +235,15 @@
             display: flex;
             align-items: center;
             justify-content: center;
-        }
-
-        .webcam-container.portrait-mode, .bg-container.portrait-mode {
-            aspect-ratio: 9 / 16;
+            transition: aspect-ratio 0.3s ease;
         }
 
         .webcam-container.landscape-mode, .bg-container.landscape-mode {
             aspect-ratio: 16 / 9;
+        }
+
+        .webcam-container.portrait-mode, .bg-container.portrait-mode {
+            aspect-ratio: 9 / 16;
         }
 
         .webcam-container video, .bg-container canvas {
@@ -440,6 +417,10 @@
             .source-panel, .background-panel {
                 flex: 1;
             }
+            .mode-btn {
+                padding: 6px 14px;
+                font-size: 0.7rem;
+            }
         }
 
         @media (max-width: 480px) {
@@ -450,9 +431,9 @@
                 width: 100%;
                 justify-content: space-between;
             }
-            .ori-btn {
-                padding: 6px 12px;
-                font-size: 0.7rem;
+            .mode-btn {
+                padding: 5px 10px;
+                font-size: 0.65rem;
             }
         }
     </style>
@@ -462,13 +443,15 @@
         <div class="header">
             <h1>green screen <span class="resolution-badge">studio</span></h1>
             <div class="header-controls">
-                <div class="orientation-toggle">
-                    <button class="ori-btn active" onclick="setOrientation('landscape')">🌄 landscape</button>
-                    <button class="ori-btn" onclick="setOrientation('portrait')">📱 portrait</button>
+                <!-- Button Group untuk Orientasi -->
+                <div class="mode-buttons">
+                    <button class="mode-btn active" id="landscapeBtn" onclick="setOrientation('landscape')">🌄 landscape</button>
+                    <button class="mode-btn" id="portraitBtn" onclick="setOrientation('portrait')">📱 portrait</button>
                 </div>
-                <div class="theme-toggle">
-                    <button class="theme-btn active" onclick="setTheme('dark')">dark</button>
-                    <button class="theme-btn" onclick="setTheme('light')">light</button>
+                <!-- Button Group untuk Tema -->
+                <div class="mode-buttons">
+                    <button class="mode-btn active" id="darkBtn" onclick="setTheme('dark')">🌙 dark</button>
+                    <button class="mode-btn" id="lightBtn" onclick="setTheme('light')">☀️ light</button>
                 </div>
             </div>
         </div>
@@ -501,7 +484,7 @@
             </div>
         </div>
 
-        <div class="status-bar" id="status">● system ready | landscape mode</div>
+        <div class="status-bar" id="status">● system ready | dark | landscape</div>
 
         <div class="controls-panel glass-card">
             <div class="control-tabs">
@@ -594,8 +577,11 @@
     </div>
 
     <script>
+        // ==================== THEME STATE ====================
+        let currentTheme = 'dark';
+        
         // ==================== ORIENTATION STATE ====================
-        let currentOrientation = 'landscape'; // 'landscape' or 'portrait'
+        let currentOrientation = 'landscape';
         
         // ==================== VARIABLES ====================
         let videoWidth = 0, videoHeight = 0;
@@ -618,6 +604,11 @@
         const resultContainer = document.getElementById('resultContainer');
         const webcamContainer = document.getElementById('webcamContainer');
         const bgContainer = document.getElementById('bgContainer');
+        const landscapeBtn = document.getElementById('landscapeBtn');
+        const portraitBtn = document.getElementById('portraitBtn');
+        const darkBtn = document.getElementById('darkBtn');
+        const lightBtn = document.getElementById('lightBtn');
+        const orientationBadge = document.getElementById('orientationBadge');
         
         let bgCtx, resultCtx;
         
@@ -625,31 +616,55 @@
         let targetWidth = 1280;
         let targetHeight = 720;
         
-        // ==================== ORIENTATION FUNCTION ====================
+        // ==================== THEME BUTTON ====================
+        function setTheme(theme) {
+            currentTheme = theme;
+            
+            if (theme === 'dark') {
+                document.body.classList.remove('light-mode');
+                darkBtn.classList.add('active');
+                lightBtn.classList.remove('active');
+                updateStatus('dark mode');
+            } else {
+                document.body.classList.add('light-mode');
+                lightBtn.classList.add('active');
+                darkBtn.classList.remove('active');
+                updateStatus('light mode');
+            }
+            localStorage.setItem('theme', theme);
+        }
+        
+        // ==================== ORIENTATION BUTTON ====================
         function setOrientation(orientation) {
             currentOrientation = orientation;
             
-            // Update UI buttons
-            document.querySelectorAll('.ori-btn').forEach(btn => btn.classList.remove('active'));
+            // Update button UI
             if (orientation === 'landscape') {
-                document.querySelector('.ori-btn:first-child').classList.add('active');
+                landscapeBtn.classList.add('active');
+                portraitBtn.classList.remove('active');
                 targetWidth = 1280;
                 targetHeight = 720;
-                document.getElementById('orientationBadge').textContent = '16:9';
+                orientationBadge.textContent = '16:9';
                 updateStatus('landscape mode (16:9)');
             } else {
-                document.querySelector('.ori-btn:last-child').classList.add('active');
+                portraitBtn.classList.add('active');
+                landscapeBtn.classList.remove('active');
                 targetWidth = 720;
                 targetHeight = 1280;
-                document.getElementById('orientationBadge').textContent = '9:16';
+                orientationBadge.textContent = '9:16';
                 updateStatus('portrait mode (9:16)');
             }
             
             // Update all containers
-            const containers = [resultContainer, webcamContainer, bgContainer];
+            const containers = [
+                { element: resultContainer, mode: `${orientation}-mode` },
+                { element: webcamContainer, mode: `${orientation}-mode` },
+                { element: bgContainer, mode: `${orientation}-mode` }
+            ];
+            
             containers.forEach(container => {
-                container.classList.remove('landscape-mode', 'portrait-mode');
-                container.classList.add(`${orientation}-mode`);
+                container.element.classList.remove('landscape-mode', 'portrait-mode');
+                container.element.classList.add(container.mode);
             });
             
             // Resize canvases
@@ -684,6 +699,9 @@
             bgCtx.font = `${Math.floor(Math.min(w, h) * 0.05)}px sans-serif`;
             bgCtx.textAlign = 'center';
             bgCtx.fillText('background', w/2, h/2);
+            bgCtx.font = `${Math.floor(Math.min(w, h) * 0.03)}px sans-serif`;
+            bgCtx.fillStyle = '#808080';
+            bgCtx.fillText('upload image', w/2, h/2 + 40);
         }
         
         function drawBackgroundWithTransform() {
@@ -720,23 +738,6 @@
             bgCtx.drawImage(bgImageObj, drawX, drawY, imgW, imgH);
             bgCtx.restore();
         }
-        
-        // ==================== THEME ====================
-        function setTheme(theme) {
-            if (theme === 'dark') {
-                document.body.classList.remove('light-mode');
-                document.querySelectorAll('.theme-btn').forEach(btn => btn.classList.remove('active'));
-                document.querySelector('.theme-btn:first-child').classList.add('active');
-            } else {
-                document.body.classList.add('light-mode');
-                document.querySelectorAll('.theme-btn').forEach(btn => btn.classList.remove('active'));
-                document.querySelector('.theme-btn:last-child').classList.add('active');
-            }
-            localStorage.setItem('theme', theme);
-        }
-        
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme === 'light') setTheme('light');
         
         // ==================== RESET FUNCTIONS ====================
         function resetBasicDefaults() {
@@ -809,15 +810,12 @@
                 
                 webcam.onloadedmetadata = () => {
                     webcam.play().then(() => {
-                        // Get actual video dimensions
                         videoWidth = webcam.videoWidth;
                         videoHeight = webcam.videoHeight;
                         
-                        // Initialize canvases
                         bgCtx = bgCanvasElem.getContext('2d');
                         resultCtx = resultCanvasElem.getContext('2d');
                         
-                        // Set initial orientation
                         setOrientation(currentOrientation);
                         
                         isWebcamReady = true;
@@ -831,6 +829,7 @@
                     const stream = await navigator.mediaDevices.getUserMedia({ video: true });
                     webcam.srcObject = stream;
                     updateStatus("compatibility mode");
+                    isWebcamReady = true;
                 } catch (e) {
                     updateStatus("cannot access camera");
                 }
@@ -838,7 +837,9 @@
         }
         
         function updateStatus(message) {
-            document.getElementById('status').textContent = `● ${message}`;
+            const themeStatus = currentTheme === 'dark' ? 'dark' : 'light';
+            const orientationStatus = currentOrientation === 'landscape' ? 'landscape' : 'portrait';
+            document.getElementById('status').textContent = `● ${message} | ${themeStatus} | ${orientationStatus}`;
         }
         
         function switchTab(tabName, event) {
@@ -929,13 +930,11 @@
                 const w = targetWidth;
                 const h = targetHeight;
                 
-                // Create temporary canvas untuk processing
                 const tempCanvas = document.createElement('canvas');
                 tempCanvas.width = w;
                 tempCanvas.height = h;
                 const tempCtx = tempCanvas.getContext('2d');
                 
-                // Draw webcam frame (scaled to target dimensions)
                 if (flipHorizontal) {
                     tempCtx.save();
                     tempCtx.scale(-1, 1);
@@ -1016,6 +1015,13 @@
         };
         
         // ==================== START ====================
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'light') {
+            setTheme('light');
+        } else {
+            setTheme('dark');
+        }
+        
         initWebcam();
         processFrame();
         
