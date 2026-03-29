@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Green Screen Studio - Portrait Optimized</title>
+    <title>Green Screen Studio - Advanced Background Control</title>
     <style>
         * {
             margin: 0;
@@ -14,7 +14,6 @@
 
         /* CSS Variables - Minimalist Theme */
         :root {
-            /* Dark Mode - Black Grey & White */
             --bg-primary: #0a0a0a;
             --bg-secondary: #111111;
             --bg-tertiary: #1a1a1a;
@@ -29,7 +28,6 @@
             --button-primary: #2a2a2a;
             --button-primary-hover: #3a3a3a;
             --button-secondary: #1f1f1f;
-            --button-secondary-hover: #2f2f2f;
             --status-bg: rgba(0, 0, 0, 0.6);
             --shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
             --input-bg: rgba(30, 30, 30, 0.9);
@@ -38,7 +36,6 @@
         }
 
         body.light-mode {
-            /* Light Mode - White Grey & Black */
             --bg-primary: #f8f9fa;
             --bg-secondary: #ffffff;
             --bg-tertiary: #f0f0f0;
@@ -53,7 +50,6 @@
             --button-primary: #e8e8e8;
             --button-primary-hover: #d8d8d8;
             --button-secondary: #f5f5f5;
-            --button-secondary-hover: #e5e5e5;
             --status-bg: rgba(255, 255, 255, 0.85);
             --shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
             --input-bg: rgba(245, 245, 245, 0.9);
@@ -70,7 +66,6 @@
             color: var(--text-primary);
         }
 
-        /* Glassmorphism */
         .glass-card {
             background: var(--glass-bg);
             backdrop-filter: blur(16px);
@@ -84,7 +79,6 @@
             margin: 0 auto;
         }
 
-        /* Header Minimalis */
         .header {
             display: flex;
             justify-content: space-between;
@@ -103,7 +97,6 @@
             align-items: center;
             gap: 8px;
             flex-wrap: wrap;
-            letter-spacing: -0.3px;
         }
 
         .theme-toggle {
@@ -143,7 +136,6 @@
             font-weight: 500;
         }
 
-        /* LAYOUT PORTRAIT OPTIMIZED */
         .main-layout {
             display: flex;
             flex-direction: column;
@@ -151,7 +143,6 @@
             margin-bottom: 12px;
         }
 
-        /* Panel Hasil - Full Width di Portrait */
         .result-panel {
             background: var(--glass-bg);
             backdrop-filter: blur(16px);
@@ -170,20 +161,22 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
-            letter-spacing: -0.2px;
-            color: var(--text-primary);
         }
 
         .result-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%;
             background: var(--bg-tertiary);
             border-radius: 12px;
             overflow: hidden;
-            aspect-ratio: 16/9;
             border: 1px solid var(--glass-border);
-            width: 100%;
         }
 
         .result-container canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
             display: block;
@@ -191,7 +184,6 @@
             background: var(--bg-secondary);
         }
 
-        /* Grid Sumber - 2 Kolom di Portrait */
         .source-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -213,27 +205,46 @@
             font-weight: 500;
             display: flex;
             align-items: center;
+            justify-content: space-between;
             gap: 4px;
             color: var(--text-secondary);
-            letter-spacing: -0.2px;
+        }
+
+        .bg-controls-mini {
+            display: flex;
+            gap: 4px;
+        }
+
+        .icon-btn {
+            background: var(--button-secondary);
+            border: 1px solid var(--glass-border);
+            color: var(--text-primary);
+            padding: 4px 8px;
+            border-radius: 8px;
+            font-size: 0.65rem;
+            cursor: pointer;
         }
 
         .webcam-container, .bg-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%;
             background: var(--bg-tertiary);
             border-radius: 10px;
             overflow: hidden;
-            aspect-ratio: 16/9;
-            width: 100%;
             border: 1px solid var(--glass-border);
         }
 
         .webcam-container video, .bg-container canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
+            display: block;
             object-fit: cover;
         }
 
-        /* Status Bar */
         .status-bar {
             background: var(--status-bg);
             backdrop-filter: blur(12px);
@@ -244,10 +255,8 @@
             margin: 12px 0;
             border-left: 2px solid var(--accent-color);
             color: var(--text-secondary);
-            font-weight: 400;
         }
 
-        /* Kontrol Panel - Compact untuk Portrait */
         .controls-panel {
             background: var(--glass-bg);
             backdrop-filter: blur(16px);
@@ -301,7 +310,6 @@
             color: var(--text-primary);
             font-weight: 500;
             font-size: 0.8rem;
-            letter-spacing: -0.2px;
         }
 
         .control-item input[type="range"] {
@@ -319,8 +327,6 @@
             background: var(--slider-thumb);
             border-radius: 50%;
             cursor: pointer;
-            border: none;
-            box-shadow: var(--shadow);
         }
 
         .control-item input[type="color"] {
@@ -341,13 +347,11 @@
             color: var(--text-primary);
             border: 1px solid var(--glass-border);
             font-size: 0.8rem;
-            font-weight: 400;
         }
 
         .value-display {
             float: right;
             color: var(--text-tertiary);
-            font-weight: 400;
             font-size: 0.75rem;
         }
 
@@ -356,12 +360,6 @@
             grid-template-columns: 1fr 1fr;
             gap: 10px;
             margin-top: 16px;
-        }
-
-        .reset-default-btn {
-            background: var(--button-secondary);
-            color: var(--text-primary);
-            border: 1px solid var(--glass-border);
         }
 
         button {
@@ -387,11 +385,6 @@
             border: none;
         }
 
-        .btn-reset {
-            background: var(--button-secondary);
-            color: var(--text-primary);
-        }
-
         .info-text {
             color: var(--text-tertiary);
             font-size: 0.65rem;
@@ -399,7 +392,6 @@
             text-align: center;
         }
 
-        /* Orientation Guide - Lebih Ramah */
         .orientation-guide {
             display: none;
             position: fixed;
@@ -415,7 +407,6 @@
             pointer-events: none;
             white-space: nowrap;
             border: 1px solid var(--glass-border);
-            color: var(--text-tertiary);
         }
 
         @media (orientation: portrait) {
@@ -426,66 +417,39 @@
             }
         }
 
-        /* Responsif untuk layar sangat kecil */
-        @media (max-width: 480px) {
-            body {
-                padding: 8px;
-            }
-            
-            .source-grid {
-                gap: 8px;
-            }
-            
-            .source-panel, .background-panel {
-                padding: 8px;
-            }
-            
-            .control-tabs {
-                gap: 4px;
-            }
-            
-            .tab-btn {
-                padding: 6px 4px;
-                font-size: 0.65rem;
-            }
-            
-            button {
-                padding: 8px;
-                font-size: 0.7rem;
-            }
-        }
-
-        /* Landscape tetap optimal */
         @media (orientation: landscape) and (min-width: 768px) {
             .main-layout {
                 flex-direction: row;
             }
-            
             .result-panel {
                 flex: 1.5;
             }
-            
             .source-grid {
                 flex: 1;
                 display: flex;
                 flex-direction: column;
                 gap: 12px;
             }
-            
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 8px;
+            }
+            .source-grid {
+                gap: 8px;
+            }
             .source-panel, .background-panel {
-                flex: 1;
+                padding: 8px;
             }
         }
 
-        /* Scrollbar minimalis */
         ::-webkit-scrollbar {
             width: 4px;
         }
-
         ::-webkit-scrollbar-track {
             background: var(--bg-tertiary);
         }
-
         ::-webkit-scrollbar-thumb {
             background: var(--text-tertiary);
             border-radius: 2px;
@@ -494,32 +458,22 @@
 </head>
 <body>
     <div class="container">
-        <!-- Header Minimalis -->
         <div class="header">
-            <h1>
-                green screen
-                <span class="resolution-badge">2K</span>
-            </h1>
+            <h1>green screen <span class="resolution-badge">2K</span></h1>
             <div class="theme-toggle">
                 <button class="theme-btn active" onclick="setTheme('dark')">dark</button>
                 <button class="theme-btn" onclick="setTheme('light')">light</button>
             </div>
         </div>
 
-        <!-- Layout Portrait Optimized -->
         <div class="main-layout">
-            <!-- Panel Hasil - Full Width -->
             <div class="result-panel glass-card">
-                <h2>
-                    result
-                    <span class="resolution-badge">2K</span>
-                </h2>
+                <h2>result <span class="resolution-badge">2K</span></h2>
                 <div class="result-container">
                     <canvas id="resultCanvas" width="2560" height="1440"></canvas>
                 </div>
             </div>
             
-            <!-- Grid Sumber - 2 Kolom -->
             <div class="source-grid">
                 <div class="source-panel glass-card">
                     <h3>webcam</h3>
@@ -529,7 +483,12 @@
                 </div>
                 
                 <div class="background-panel glass-card">
-                    <h3>background</h3>
+                    <h3>
+                        background
+                        <div class="bg-controls-mini">
+                            <button class="icon-btn" onclick="resetBackgroundTransform()">↺</button>
+                        </div>
+                    </h3>
                     <div class="bg-container">
                         <canvas id="backgroundCanvas" width="2560" height="1440"></canvas>
                     </div>
@@ -537,43 +496,33 @@
             </div>
         </div>
 
-        <!-- Status Bar -->
-        <div class="status-bar" id="status">
-            ● system ready
-        </div>
+        <div class="status-bar" id="status">● system ready</div>
 
-        <!-- Kontrol Panel Compact -->
         <div class="controls-panel glass-card">
             <div class="control-tabs">
                 <button class="tab-btn active" onclick="switchTab('basic')">basic</button>
                 <button class="tab-btn" onclick="switchTab('advanced')">advanced</button>
-                <button class="tab-btn" onclick="switchTab('background')">bg</button>
+                <button class="tab-btn" onclick="switchTab('background')">bg adjust</button>
             </div>
 
-            <!-- Tab Basic -->
             <div id="tab-basic" class="tab-content active">
                 <div class="control-item">
                     <label>key color</label>
                     <input type="color" id="keyColor" value="#00ff00">
                 </div>
-                
                 <div class="control-item">
                     <label>tolerance <span class="value-display" id="toleranceValue">0.35</span></label>
                     <input type="range" id="tolerance" min="0" max="0.8" step="0.01" value="0.35">
                 </div>
-                
                 <div class="control-item">
                     <label>smooth edge <span class="value-display" id="smoothValue">0.15</span></label>
                     <input type="range" id="smoothness" min="0" max="0.3" step="0.01" value="0.15">
                 </div>
-                
                 <div class="button-group">
                     <button class="reset-default-btn" onclick="resetBasicDefaults()">reset</button>
                 </div>
-                <div class="info-text">default: green | 0.35 | 0.15</div>
             </div>
 
-            <!-- Tab Advanced -->
             <div id="tab-advanced" class="tab-content">
                 <div class="control-item">
                     <label>quality</label>
@@ -583,7 +532,6 @@
                         <option value="low">low (fast)</option>
                     </select>
                 </div>
-                
                 <div class="control-item">
                     <label>frame rate</label>
                     <select id="fpsLimit">
@@ -592,7 +540,6 @@
                         <option value="10">10 fps</option>
                     </select>
                 </div>
-                
                 <div class="control-item">
                     <label>camera</label>
                     <select id="cameraMode">
@@ -600,7 +547,6 @@
                         <option value="environment">back</option>
                     </select>
                 </div>
-                
                 <div class="control-item">
                     <label>flip</label>
                     <select id="flipMode">
@@ -608,34 +554,51 @@
                         <option value="normal">normal</option>
                     </select>
                 </div>
-                
                 <div class="button-group">
                     <button class="reset-default-btn" onclick="resetAdvancedDefaults()">reset</button>
                 </div>
-                <div class="info-text">default: medium | 15fps | front | mirror</div>
             </div>
 
-            <!-- Tab Background -->
             <div id="tab-background" class="tab-content">
                 <div class="control-item">
-                    <label>upload image</label>
+                    <label>📁 upload image</label>
                     <input type="file" id="bgUpload" accept="image/*">
                 </div>
-                
+                <div class="control-item">
+                    <label>🔍 zoom <span class="value-display" id="zoomValue">100%</span></label>
+                    <input type="range" id="bgZoom" min="50" max="200" step="5" value="100">
+                </div>
+                <div class="control-item">
+                    <label>↔️ position X <span class="value-display" id="posXValue">0</span></label>
+                    <input type="range" id="bgPosX" min="-100" max="100" step="2" value="0">
+                </div>
+                <div class="control-item">
+                    <label>↕️ position Y <span class="value-display" id="posYValue">0</span></label>
+                    <input type="range" id="bgPosY" min="-100" max="100" step="2" value="0">
+                </div>
+                <div class="control-item">
+                    <label>🔄 rotation <span class="value-display" id="rotateValue">0°</span></label>
+                    <input type="range" id="bgRotate" min="0" max="360" step="5" value="0">
+                </div>
                 <div class="button-group">
-                    <button class="btn-reset" onclick="resetBackground()">reset</button>
+                    <button class="btn-reset" onclick="resetBackground()">reset bg</button>
                     <button class="btn-capture" onclick="captureResult()">capture</button>
                 </div>
+                <div class="info-text">adjust background to match your orientation</div>
             </div>
         </div>
 
-        <!-- Orientation Guide -->
-        <div class="orientation-guide">
-            <span>↻</span> landscape for wider view
-        </div>
+        <div class="orientation-guide"><span>↻</span> landscape for wider view</div>
     </div>
 
     <script>
+        // ==================== BACKGROUND TRANSFORM VARIABLES ====================
+        let bgImageObj = null;
+        let bgZoom = 100;
+        let bgPosX = 0;
+        let bgPosY = 0;
+        let bgRotate = 0;
+        
         // ==================== THEME MANAGEMENT ====================
         function setTheme(theme) {
             if (theme === 'dark') {
@@ -652,57 +615,95 @@
         }
 
         const savedTheme = localStorage.getItem('theme');
-        if (savedTheme === 'light') {
-            setTheme('light');
-        }
+        if (savedTheme === 'light') setTheme('light');
 
-        // ==================== RESET DEFAULT FUNCTIONS ====================
+        // ==================== RESET FUNCTIONS ====================
         function resetBasicDefaults() {
             document.getElementById('keyColor').value = '#00ff00';
             keyColor = [0, 255, 0];
-            
             document.getElementById('tolerance').value = '0.35';
             tolerance = 0.35;
             document.getElementById('toleranceValue').textContent = '0.35';
-            
             document.getElementById('smoothness').value = '0.15';
             smoothness = 0.15;
             document.getElementById('smoothValue').textContent = '0.15';
-            
             updateStatus("basic settings reset");
-            
-            const btn = event.target;
-            btn.style.transform = 'scale(0.95)';
-            setTimeout(() => btn.style.transform = 'scale(1)', 200);
         }
         
         function resetAdvancedDefaults() {
             document.getElementById('qualityMode').value = 'medium';
             PROCESS_WIDTH = 1280;
             PROCESS_HEIGHT = 720;
-            
             document.getElementById('fpsLimit').value = '15';
             fpsInterval = 1000 / 15;
-            
             const oldCameraMode = document.getElementById('cameraMode').value;
             document.getElementById('cameraMode').value = 'user';
-            
             document.getElementById('flipMode').value = 'flip';
             flipHorizontal = true;
-            
             updateStatus("advanced settings reset");
-            
             if (oldCameraMode !== 'user') {
-                if (webcam.srcObject) {
-                    webcam.srcObject.getTracks().forEach(track => track.stop());
-                }
+                if (webcam.srcObject) webcam.srcObject.getTracks().forEach(track => track.stop());
                 isWebcamReady = false;
                 initWebcam();
             }
+        }
+        
+        function resetBackgroundTransform() {
+            bgZoom = 100;
+            bgPosX = 0;
+            bgPosY = 0;
+            bgRotate = 0;
+            document.getElementById('bgZoom').value = 100;
+            document.getElementById('bgPosX').value = 0;
+            document.getElementById('bgPosY').value = 0;
+            document.getElementById('bgRotate').value = 0;
+            document.getElementById('zoomValue').textContent = '100%';
+            document.getElementById('posXValue').textContent = '0';
+            document.getElementById('posYValue').textContent = '0';
+            document.getElementById('rotateValue').textContent = '0°';
+            if (bgImageObj) {
+                drawBackgroundWithTransform();
+            }
+            updateStatus("background transform reset");
+        }
+        
+        // ==================== DRAW BACKGROUND WITH TRANSFORM ====================
+        function drawBackgroundWithTransform() {
+            if (!bgImageObj) return;
             
-            const btn = event.target;
-            btn.style.transform = 'scale(0.95)';
-            setTimeout(() => btn.style.transform = 'scale(1)', 200);
+            const ctx = bgCtx;
+            const w = WIDTH;
+            const h = HEIGHT;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, w, h);
+            
+            // Calculate dimensions based on zoom
+            const zoomFactor = bgZoom / 100;
+            let imgW = bgImageObj.width * zoomFactor;
+            let imgH = bgImageObj.height * zoomFactor;
+            
+            // Calculate position with offset
+            const offsetX = (bgPosX / 100) * w;
+            const offsetY = (bgPosY / 100) * h;
+            
+            // Center the image initially, then apply position offset
+            let drawX = (w - imgW) / 2 + offsetX;
+            let drawY = (h - imgH) / 2 + offsetY;
+            
+            ctx.save();
+            
+            // Apply rotation around center of image
+            if (bgRotate !== 0) {
+                const centerX = drawX + imgW / 2;
+                const centerY = drawY + imgH / 2;
+                ctx.translate(centerX, centerY);
+                ctx.rotate(bgRotate * Math.PI / 180);
+                ctx.translate(-centerX, -centerY);
+            }
+            
+            ctx.drawImage(bgImageObj, drawX, drawY, imgW, imgH);
+            ctx.restore();
         }
         
         // ==================== DETEKSI MOBILE ====================
@@ -712,7 +713,6 @@
         // ==================== KONFIGURASI ====================
         const WIDTH = 2560;
         const HEIGHT = 1440;
-        
         let PROCESS_WIDTH = 1280;
         let PROCESS_HEIGHT = 720;
         
@@ -720,7 +720,6 @@
         const webcam = document.getElementById('webcam');
         const bgCanvas = document.getElementById('backgroundCanvas');
         const resultCanvas = document.getElementById('resultCanvas');
-        
         const bgCtx = bgCanvas.getContext('2d');
         const resultCtx = resultCanvas.getContext('2d');
         
@@ -733,7 +732,6 @@
         let keyColor = [0, 255, 0];
         let tolerance = 0.35;
         let smoothness = 0.15;
-        let backgroundImage = null;
         let isWebcamReady = false;
         let animationFrame = null;
         let lastProcessTime = 0;
@@ -742,23 +740,19 @@
         
         // ==================== FUNGSI ====================
         function updateStatus(message) {
-            const statusEl = document.getElementById('status');
-            statusEl.textContent = `● ${message}`;
+            document.getElementById('status').textContent = `● ${message}`;
         }
         
         function switchTab(tabName, event) {
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
             document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-            
-            if (event && event.target) {
-                event.target.classList.add('active');
-            } else {
+            if (event && event.target) event.target.classList.add('active');
+            else {
                 const btns = document.querySelectorAll('.tab-btn');
                 if (tabName === 'basic') btns[0].classList.add('active');
                 else if (tabName === 'advanced') btns[1].classList.add('active');
                 else btns[2].classList.add('active');
             }
-            
             document.getElementById(`tab-${tabName}`).classList.add('active');
         }
         
@@ -766,7 +760,6 @@
         async function initWebcam() {
             try {
                 updateStatus("initializing camera...");
-                
                 const cameraMode = document.getElementById('cameraMode').value;
                 const flipMode = document.getElementById('flipMode').value;
                 flipHorizontal = flipMode === 'flip';
@@ -779,7 +772,6 @@
                         frameRate: { ideal: 30 }
                     }
                 };
-                
                 if (isIOS) {
                     constraints.video.width.ideal = 1280;
                     constraints.video.height.ideal = 720;
@@ -787,16 +779,12 @@
                 
                 const stream = await navigator.mediaDevices.getUserMedia(constraints);
                 webcam.srcObject = stream;
-                
                 webcam.onloadedmetadata = () => {
-                    webcam.play()
-                        .then(() => {
-                            isWebcamReady = true;
-                            updateStatus("camera ready");
-                        })
-                        .catch(e => updateStatus("error: " + e.message));
+                    webcam.play().then(() => {
+                        isWebcamReady = true;
+                        updateStatus("camera ready");
+                    }).catch(e => updateStatus("error: " + e.message));
                 };
-                
             } catch (err) {
                 updateStatus("camera access failed");
                 try {
@@ -812,75 +800,78 @@
         
         // ==================== RESET BACKGROUND ====================
         function resetBackground() {
-            const gradient = bgCtx.createLinearGradient(0, 0, WIDTH, HEIGHT);
-            gradient.addColorStop(0, '#2a2a2a');
-            gradient.addColorStop(0.5, '#1a1a1a');
-            gradient.addColorStop(1, '#0a0a0a');
-            
-            bgCtx.fillStyle = gradient;
-            bgCtx.fillRect(0, 0, WIDTH, HEIGHT);
-            
-            bgCtx.fillStyle = '#ffffff';
-            bgCtx.font = '300 32px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
-            bgCtx.textAlign = 'center';
-            bgCtx.fillText('background', WIDTH/2, HEIGHT/2);
-            bgCtx.font = '300 20px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
-            bgCtx.fillStyle = '#808080';
-            bgCtx.fillText('upload image', WIDTH/2, HEIGHT/2 + 50);
-            
-            backgroundImage = null;
+            resetBackgroundTransform();
+            if (!bgImageObj) {
+                const gradient = bgCtx.createLinearGradient(0, 0, WIDTH, HEIGHT);
+                gradient.addColorStop(0, '#2a2a2a');
+                gradient.addColorStop(0.5, '#1a1a1a');
+                gradient.addColorStop(1, '#0a0a0a');
+                bgCtx.fillStyle = gradient;
+                bgCtx.fillRect(0, 0, WIDTH, HEIGHT);
+                bgCtx.fillStyle = '#ffffff';
+                bgCtx.font = '300 32px sans-serif';
+                bgCtx.textAlign = 'center';
+                bgCtx.fillText('background', WIDTH/2, HEIGHT/2);
+                bgCtx.font = '300 20px sans-serif';
+                bgCtx.fillStyle = '#808080';
+                bgCtx.fillText('upload image', WIDTH/2, HEIGHT/2 + 50);
+            } else {
+                drawBackgroundWithTransform();
+            }
             updateStatus("background reset");
         }
         
         // ==================== EVENT LISTENERS ====================
         document.getElementById('keyColor').addEventListener('input', (e) => {
             const hex = e.target.value;
-            keyColor = [
-                parseInt(hex.substr(1,2), 16),
-                parseInt(hex.substr(3,2), 16),
-                parseInt(hex.substr(5,2), 16)
-            ];
+            keyColor = [parseInt(hex.substr(1,2), 16), parseInt(hex.substr(3,2), 16), parseInt(hex.substr(5,2), 16)];
         });
-        
         document.getElementById('tolerance').addEventListener('input', (e) => {
             tolerance = parseFloat(e.target.value);
             document.getElementById('toleranceValue').textContent = tolerance.toFixed(2);
         });
-        
         document.getElementById('smoothness').addEventListener('input', (e) => {
             smoothness = parseFloat(e.target.value);
             document.getElementById('smoothValue').textContent = smoothness.toFixed(2);
         });
-        
         document.getElementById('qualityMode').addEventListener('change', (e) => {
             const quality = e.target.value;
-            if (quality === 'high') {
-                PROCESS_WIDTH = 1920;
-                PROCESS_HEIGHT = 1080;
-            } else if (quality === 'medium') {
-                PROCESS_WIDTH = 1280;
-                PROCESS_HEIGHT = 720;
-            } else {
-                PROCESS_WIDTH = 640;
-                PROCESS_HEIGHT = 360;
-            }
+            if (quality === 'high') { PROCESS_WIDTH = 1920; PROCESS_HEIGHT = 1080; }
+            else if (quality === 'medium') { PROCESS_WIDTH = 1280; PROCESS_HEIGHT = 720; }
+            else { PROCESS_WIDTH = 640; PROCESS_HEIGHT = 360; }
         });
-        
         document.getElementById('fpsLimit').addEventListener('change', (e) => {
-            const fps = parseInt(e.target.value);
-            fpsInterval = 1000 / fps;
+            fpsInterval = 1000 / parseInt(e.target.value);
         });
-        
         document.getElementById('cameraMode').addEventListener('change', () => {
-            if (webcam.srcObject) {
-                webcam.srcObject.getTracks().forEach(track => track.stop());
-            }
+            if (webcam.srcObject) webcam.srcObject.getTracks().forEach(track => track.stop());
             isWebcamReady = false;
             initWebcam();
         });
-        
         document.getElementById('flipMode').addEventListener('change', (e) => {
             flipHorizontal = e.target.value === 'flip';
+        });
+        
+        // Background transform controls
+        document.getElementById('bgZoom').addEventListener('input', (e) => {
+            bgZoom = parseInt(e.target.value);
+            document.getElementById('zoomValue').textContent = bgZoom + '%';
+            if (bgImageObj) drawBackgroundWithTransform();
+        });
+        document.getElementById('bgPosX').addEventListener('input', (e) => {
+            bgPosX = parseInt(e.target.value);
+            document.getElementById('posXValue').textContent = bgPosX;
+            if (bgImageObj) drawBackgroundWithTransform();
+        });
+        document.getElementById('bgPosY').addEventListener('input', (e) => {
+            bgPosY = parseInt(e.target.value);
+            document.getElementById('posYValue').textContent = bgPosY;
+            if (bgImageObj) drawBackgroundWithTransform();
+        });
+        document.getElementById('bgRotate').addEventListener('input', (e) => {
+            bgRotate = parseInt(e.target.value);
+            document.getElementById('rotateValue').textContent = bgRotate + '°';
+            if (bgImageObj) drawBackgroundWithTransform();
         });
         
         document.getElementById('bgUpload').addEventListener('change', (e) => {
@@ -890,9 +881,9 @@
                 reader.onload = (event) => {
                     const img = new Image();
                     img.onload = () => {
-                        bgCtx.drawImage(img, 0, 0, WIDTH, HEIGHT);
-                        backgroundImage = img;
-                        updateStatus("background uploaded");
+                        bgImageObj = img;
+                        drawBackgroundWithTransform();
+                        updateStatus("background uploaded - use adjust controls");
                     };
                     img.src = event.target.result;
                 };
@@ -903,7 +894,6 @@
         // ==================== GREEN SCREEN PROCESSING ====================
         function applyGreenScreen() {
             if (!isWebcamReady || webcam.readyState < 2) return false;
-            
             try {
                 const now = performance.now();
                 if (now - lastProcessTime < fpsInterval) return true;
@@ -924,14 +914,12 @@
                 }
                 
                 const webcamData = tempCtx.getImageData(0, 0, PROCESS_WIDTH, PROCESS_HEIGHT);
-                
                 const bgTempCanvas = document.createElement('canvas');
                 bgTempCanvas.width = PROCESS_WIDTH;
                 bgTempCanvas.height = PROCESS_HEIGHT;
                 const bgTempCtx = bgTempCanvas.getContext('2d');
                 bgTempCtx.drawImage(bgCanvas, 0, 0, PROCESS_WIDTH, PROCESS_HEIGHT);
                 const bgData = bgTempCtx.getImageData(0, 0, PROCESS_WIDTH, PROCESS_HEIGHT);
-                
                 const resultTempData = tempCtx.createImageData(PROCESS_WIDTH, PROCESS_HEIGHT);
                 
                 const webcamPixels = webcamData.data;
@@ -942,21 +930,15 @@
                     const r = webcamPixels[i];
                     const g = webcamPixels[i + 1];
                     const b = webcamPixels[i + 2];
-                    
                     const dr = r - keyColor[0];
                     const dg = g - keyColor[1];
                     const db = b - keyColor[2];
-                    
                     const distance = Math.sqrt(dr*dr + dg*dg + db*db) / Math.sqrt(255*255*3);
                     
                     let alpha;
-                    if (distance <= tolerance) {
-                        alpha = 0;
-                    } else if (distance >= tolerance + smoothness) {
-                        alpha = 1;
-                    } else {
-                        alpha = (distance - tolerance) / smoothness;
-                    }
+                    if (distance <= tolerance) alpha = 0;
+                    else if (distance >= tolerance + smoothness) alpha = 1;
+                    else alpha = (distance - tolerance) / smoothness;
                     
                     if (alpha === 0) {
                         resultPixels[i] = bgPixels[i];
@@ -971,7 +953,6 @@
                         resultPixels[i + 1] = webcamPixels[i + 1] * alpha + bgPixels[i + 1] * (1 - alpha);
                         resultPixels[i + 2] = webcamPixels[i + 2] * alpha + bgPixels[i + 2] * (1 - alpha);
                     }
-                    
                     resultPixels[i + 3] = 255;
                 }
                 
@@ -979,76 +960,46 @@
                 resultTempCanvas.width = PROCESS_WIDTH;
                 resultTempCanvas.height = PROCESS_HEIGHT;
                 resultTempCanvas.getContext('2d').putImageData(resultTempData, 0, 0);
-                
                 resultCtx.drawImage(resultTempCanvas, 0, 0, WIDTH, HEIGHT);
-                
                 return true;
-                
-            } catch (error) {
-                return false;
-            }
+            } catch (error) { return false; }
         }
         
-        // ==================== LOOP ====================
         function processFrame() {
-            if (isWebcamReady) {
-                applyGreenScreen();
-            }
+            if (isWebcamReady) applyGreenScreen();
             animationFrame = requestAnimationFrame(processFrame);
         }
         
-        // ==================== CAPTURE ====================
         window.captureResult = function() {
             try {
                 const link = document.createElement('a');
                 link.download = `greenscreen-${Date.now()}.png`;
-                
                 resultCanvas.toBlob((blob) => {
                     const url = URL.createObjectURL(blob);
                     link.href = url;
                     link.click();
                     URL.revokeObjectURL(url);
                     updateStatus("captured");
-                    
-                    if (isMobile) {
-                        setTimeout(() => {
-                            alert('image saved');
-                        }, 100);
-                    }
+                    if (isMobile) setTimeout(() => alert('image saved'), 100);
                 }, 'image/png', 0.95);
-                
-            } catch (error) {
-                updateStatus("capture failed");
-            }
+            } catch (error) { updateStatus("capture failed"); }
         };
         
-        // ==================== EXPOSE FUNCTIONS ====================
         window.resetBackground = resetBackground;
         window.switchTab = switchTab;
         window.setTheme = setTheme;
         window.resetBasicDefaults = resetBasicDefaults;
         window.resetAdvancedDefaults = resetAdvancedDefaults;
+        window.resetBackgroundTransform = resetBackgroundTransform;
         
         // ==================== START ====================
         resetBackground();
         initWebcam();
         processFrame();
         
-        // Cleanup
         window.addEventListener('beforeunload', () => {
-            if (animationFrame) {
-                cancelAnimationFrame(animationFrame);
-            }
-            if (webcam.srcObject) {
-                webcam.srcObject.getTracks().forEach(track => track.stop());
-            }
-        });
-        
-        // Handle orientation change
-        window.addEventListener('orientationchange', () => {
-            setTimeout(() => {
-                window.dispatchEvent(new Event('resize'));
-            }, 100);
+            if (animationFrame) cancelAnimationFrame(animationFrame);
+            if (webcam.srcObject) webcam.srcObject.getTracks().forEach(track => track.stop());
         });
     </script>
 </body>
