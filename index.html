@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Green Screen Studio - Universal Orientation</title>
+    <title>Green Screen Studio - Fixed Preview Layout</title>
     <style>
         * {
             margin: 0;
@@ -12,6 +12,7 @@
             -webkit-tap-highlight-color: transparent;
         }
 
+        /* CSS Variables - Minimalist Theme */
         :root {
             --bg-primary: #0a0a0a;
             --bg-secondary: #111111;
@@ -21,7 +22,7 @@
             --text-primary: #ffffff;
             --text-secondary: #b0b0b0;
             --text-tertiary: #6c6c6c;
-            --accent-secondary: #4a9eff;
+            --accent-color: #ffffff;
             --button-primary: #2a2a2a;
             --button-secondary: #1f1f1f;
             --status-bg: rgba(0, 0, 0, 0.6);
@@ -29,8 +30,6 @@
             --input-bg: rgba(30, 30, 30, 0.9);
             --slider-track: #2a2a2a;
             --slider-thumb: #ffffff;
-            --warning-bg: rgba(255, 100, 100, 0.2);
-            --warning-border: rgba(255, 100, 100, 0.5);
         }
 
         body.light-mode {
@@ -42,14 +41,12 @@
             --text-primary: #1a1a1a;
             --text-secondary: #4a4a4a;
             --text-tertiary: #8a8a8a;
-            --accent-secondary: #0066ff;
+            --accent-color: #1a1a1a;
             --button-primary: #e8e8e8;
             --button-secondary: #f5f5f5;
             --status-bg: rgba(255, 255, 255, 0.85);
             --slider-track: #e0e0e0;
             --slider-thumb: #1a1a1a;
-            --warning-bg: rgba(255, 200, 200, 0.3);
-            --warning-border: rgba(255, 100, 100, 0.5);
         }
 
         body {
@@ -64,6 +61,7 @@
         .glass-card {
             background: var(--glass-bg);
             backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             border: 1px solid var(--glass-border);
             box-shadow: var(--shadow);
         }
@@ -92,56 +90,50 @@
             gap: 8px;
         }
 
-        .header-controls {
+        .theme-toggle {
             display: flex;
-            gap: 12px;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .mode-buttons {
-            display: flex;
-            gap: 8px;
+            gap: 6px;
             background: var(--glass-bg);
             backdrop-filter: blur(10px);
-            border-radius: 50px;
-            padding: 4px;
+            border-radius: 40px;
+            padding: 3px;
             border: 1px solid var(--glass-border);
         }
 
-        .mode-btn {
-            padding: 8px 20px;
+        .theme-btn {
+            padding: 6px 16px;
             border: none;
-            border-radius: 40px;
+            border-radius: 36px;
+            cursor: pointer;
             font-size: 0.75rem;
             font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
             background: transparent;
-            color: var(--text-secondary);
+            color: var(--text-primary);
         }
 
-        .mode-btn.active {
-            background: var(--accent-secondary);
-            color: #ffffff;
+        .theme-btn.active {
+            background: var(--accent-color);
+            color: var(--bg-primary);
         }
 
         .resolution-badge {
             display: inline-block;
-            background: var(--accent-secondary);
-            color: #ffffff;
+            background: var(--accent-color);
+            color: var(--bg-primary);
             padding: 2px 8px;
             border-radius: 20px;
             font-size: 0.6rem;
             font-weight: 500;
         }
 
+        /* Layout Utama - Fixed Preview Size */
         .main-layout {
             display: flex;
             gap: 16px;
             margin-bottom: 16px;
         }
 
+        /* Panel Hasil - Ukuran Tetap Maksimal */
         .result-panel {
             background: var(--glass-bg);
             backdrop-filter: blur(16px);
@@ -163,34 +155,31 @@
             gap: 8px;
         }
 
+        /* Container dengan ukuran tetap dan object-fit contain */
         .result-container {
             position: relative;
             width: 100%;
-            background: #000;
+            background: var(--bg-tertiary);
             border-radius: 12px;
             overflow: hidden;
             border: 1px solid var(--glass-border);
-        }
-
-        .result-container.landscape-mode {
             aspect-ratio: 16 / 9;
-        }
-
-        .result-container.portrait-mode {
-            aspect-ratio: 9 / 16;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .result-container canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
             display: block;
             object-fit: contain;
-            background: #000;
+            background: var(--bg-secondary);
         }
 
+        /* Grid Sumber - Ukuran Tetap */
         .source-grid {
             flex: 1;
             display: flex;
@@ -217,6 +206,7 @@
             color: var(--text-secondary);
         }
 
+        /* Preview container dengan ukuran tetap */
         .webcam-container, .bg-container {
             position: relative;
             width: 100%;
@@ -225,16 +215,19 @@
             overflow: hidden;
             border: 1px solid var(--glass-border);
             aspect-ratio: 16 / 9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .webcam-container video, .bg-container canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
             display: block;
-            object-fit: cover;
+            object-fit: contain;
+            background: var(--bg-secondary);
         }
 
         .status-bar {
@@ -245,14 +238,8 @@
             text-align: center;
             font-size: 0.7rem;
             margin: 12px 0;
-            border-left: 2px solid var(--accent-secondary);
+            border-left: 2px solid var(--accent-color);
             color: var(--text-secondary);
-        }
-
-        .warning-bar {
-            background: var(--warning-bg);
-            border-left: 2px solid var(--warning-border);
-            margin-top: 8px;
         }
 
         .controls-panel {
@@ -285,8 +272,9 @@
         }
 
         .tab-btn.active {
-            background: var(--accent-secondary);
-            color: #ffffff;
+            background: var(--accent-color);
+            color: var(--bg-primary);
+            border-color: var(--accent-color);
         }
 
         .tab-content {
@@ -377,8 +365,8 @@
         }
 
         .btn-capture {
-            background: var(--accent-secondary);
-            color: #ffffff;
+            background: var(--accent-color);
+            color: var(--bg-primary);
             border: none;
         }
 
@@ -389,70 +377,85 @@
             text-align: center;
         }
 
-        .orientation-badge-group {
-            display: flex;
-            gap: 16px;
-            justify-content: center;
-            margin-top: 8px;
-            font-size: 0.65rem;
-        }
-
-        .orientation-badge-item {
-            padding: 4px 12px;
-            border-radius: 20px;
+        .orientation-guide {
+            display: none;
+            position: fixed;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
             background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            padding: 6px 12px;
+            border-radius: 30px;
+            font-size: 0.6rem;
+            z-index: 1000;
+            pointer-events: none;
+            white-space: nowrap;
             border: 1px solid var(--glass-border);
         }
 
-        .orientation-badge-item span {
-            color: var(--accent-secondary);
-            font-weight: bold;
-        }
-
+        /* Responsive */
         @media (max-width: 768px) {
-            body { padding: 12px; }
-            .main-layout { flex-direction: column; }
-            .source-grid { flex-direction: row; }
-            .source-panel, .background-panel { flex: 1; }
-            .mode-btn { padding: 6px 14px; font-size: 0.7rem; }
+            body {
+                padding: 12px;
+            }
+            .main-layout {
+                flex-direction: column;
+            }
+            .source-grid {
+                flex-direction: row;
+            }
+            .source-panel, .background-panel {
+                flex: 1;
+            }
         }
 
         @media (max-width: 480px) {
-            .source-grid { flex-direction: column; }
-            .header-controls { width: 100%; justify-content: space-between; }
-            .mode-btn { padding: 5px 10px; font-size: 0.65rem; }
-            .orientation-badge-group { flex-wrap: wrap; gap: 8px; }
+            .source-grid {
+                flex-direction: column;
+            }
+            .orientation-guide {
+                display: flex;
+                align-items: center;
+                gap: 6px;
+            }
+        }
+
+        @media (orientation: landscape) and (min-width: 768px) {
+            .main-layout {
+                flex-direction: row;
+            }
+        }
+
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-tertiary);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--text-tertiary);
+            border-radius: 2px;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>green screen <span class="resolution-badge">universal</span></h1>
-            <div class="header-controls">
-                <div class="mode-buttons">
-                    <button class="mode-btn active" id="landscapeBtn" onclick="setOutputOrientation('landscape')">🌄 landscape</button>
-                    <button class="mode-btn" id="portraitBtn" onclick="setOutputOrientation('portrait')">📱 portrait</button>
-                </div>
-                <div class="mode-buttons">
-                    <button class="mode-btn active" id="darkBtn" onclick="setTheme('dark')">🌙 dark</button>
-                    <button class="mode-btn" id="lightBtn" onclick="setTheme('light')">☀️ light</button>
-                </div>
+            <h1>green screen <span class="resolution-badge">studio</span></h1>
+            <div class="theme-toggle">
+                <button class="theme-btn active" onclick="setTheme('dark')">dark</button>
+                <button class="theme-btn" onclick="setTheme('light')">light</button>
             </div>
         </div>
 
         <div class="main-layout">
             <div class="result-panel glass-card">
-                <h2>result <span class="resolution-badge" id="orientationBadge">16:9</span></h2>
-                <div class="result-container landscape-mode" id="resultContainer">
+                <h2>result <span class="resolution-badge" id="resultRatioBadge">preview</span></h2>
+                <div class="result-container">
                     <canvas id="resultCanvas"></canvas>
                 </div>
-                <div class="orientation-badge-group" id="orientationInfo">
-                    <div class="orientation-badge-item">📱 output: <span id="outputOriText">landscape 16:9</span></div>
-                    <div class="orientation-badge-item">🎥 camera: <span id="cameraOriText">-</span></div>
-                    <div class="orientation-badge-item">🖼️ bg: <span id="bgOriText">-</span></div>
-                </div>
-                <div class="info-text">hasil green screen | letterbox = area hitam</div>
+                <div class="info-text">hasil green screen | capture dalam resolusi asli</div>
             </div>
             
             <div class="source-grid">
@@ -474,15 +477,13 @@
             </div>
         </div>
 
-        <div class="status-bar" id="status">● system ready | dark | landscape</div>
-        <div class="status-bar warning-bar" id="warningStatus" style="display: none;"></div>
+        <div class="status-bar" id="status">● system ready</div>
 
         <div class="controls-panel glass-card">
             <div class="control-tabs">
                 <button class="tab-btn active" onclick="switchTab('basic')">basic</button>
                 <button class="tab-btn" onclick="switchTab('advanced')">advanced</button>
                 <button class="tab-btn" onclick="switchTab('background')">bg adjust</button>
-                <button class="tab-btn" onclick="switchTab('fit')">📐 fit mode</button>
             </div>
 
             <div id="tab-basic" class="tab-content active">
@@ -505,7 +506,7 @@
 
             <div id="tab-advanced" class="tab-content">
                 <div class="control-item">
-                    <label>quality</label>
+                    <label>quality (processing)</label>
                     <select id="qualityMode">
                         <option value="high">high</option>
                         <option value="medium" selected>medium</option>
@@ -549,51 +550,32 @@
                     <input type="range" id="bgZoom" min="50" max="200" step="5" value="100">
                 </div>
                 <div class="control-item">
-                    <label>↔️ pos X <span class="value-display" id="posXValue">0</span></label>
+                    <label>↔️ position X <span class="value-display" id="posXValue">0</span></label>
                     <input type="range" id="bgPosX" min="-100" max="100" step="2" value="0">
                 </div>
                 <div class="control-item">
-                    <label>↕️ pos Y <span class="value-display" id="posYValue">0</span></label>
+                    <label>↕️ position Y <span class="value-display" id="posYValue">0</span></label>
                     <input type="range" id="bgPosY" min="-100" max="100" step="2" value="0">
                 </div>
-                <div class="button-group">
-                    <button onclick="resetBackgroundTransform()">reset</button>
-                </div>
-            </div>
-
-            <div id="tab-fit" class="tab-content">
                 <div class="control-item">
-                    <label>📐 camera fit mode</label>
-                    <select id="cameraFitMode">
-                        <option value="contain" selected>contain (letterbox/pillarbox)</option>
-                        <option value="cover">cover (crop to fill)</option>
-                        <option value="fill">fill (stretch - not recommended)</option>
-                    </select>
-                    <div class="info-text">contain: tampilkan semua dengan area hitam | cover: potong untuk memenuhi layar</div>
-                </div>
-                <div class="control-item">
-                    <label>🎨 letterbox color</label>
-                    <input type="color" id="letterboxColor" value="#000000">
+                    <label>🔄 rotation <span class="value-display" id="rotateValue">0°</span></label>
+                    <input type="range" id="bgRotate" min="0" max="360" step="5" value="0">
                 </div>
                 <div class="button-group">
-                    <button onclick="resetFitDefaults()">reset fit defaults</button>
-                </div>
-                <div class="info-text" style="margin-top: 12px; background: var(--warning-bg); padding: 8px; border-radius: 8px;">
-                    💡 tips: jika orientasi camera berbeda dengan output, gunakan "contain" untuk tampilan penuh dengan letterbox, atau "cover" untuk mengisi layar penuh (bagian tepi terpotong)
+                    <button onclick="resetBackgroundTransform()">reset transform</button>
+                    <button class="btn-capture" onclick="captureResult()">capture 2K</button>
                 </div>
             </div>
         </div>
+
+        <div class="orientation-guide"><span>↻</span> rotate for better view</div>
     </div>
 
     <script>
-        // ==================== CONFIGURATION ====================
-        let currentTheme = 'dark';
-        let outputOrientation = 'landscape'; // 'landscape' or 'portrait'
-        let cameraFitMode = 'contain'; // 'contain', 'cover', 'fill'
-        let letterboxColor = '#000000';
-        
+        // ==================== VARIABLES ====================
+        let videoWidth = 0, videoHeight = 0;
         let bgImageObj = null;
-        let bgZoom = 100, bgPosX = 0, bgPosY = 0;
+        let bgZoom = 100, bgPosX = 0, bgPosY = 0, bgRotate = 0;
         
         let keyColor = [0, 255, 0];
         let tolerance = 0.35;
@@ -604,178 +586,78 @@
         let fpsInterval = 1000 / 15;
         let flipHorizontal = true;
         
-        // Canvas elements
+        // Canvas untuk processing (ukuran asli webcam)
+        let processingCanvas = null;
+        let processingCtx = null;
+        
+        // Canvas untuk display (scaled)
+        let resultCanvas = null;
+        let resultCtx = null;
+        let bgCanvas = null;
+        let bgCtx = null;
+        
+        // ==================== DOM ELEMENTS ====================
         const webcam = document.getElementById('webcam');
         const bgCanvasElem = document.getElementById('backgroundCanvas');
         const resultCanvasElem = document.getElementById('resultCanvas');
-        const resultContainer = document.getElementById('resultContainer');
-        const landscapeBtn = document.getElementById('landscapeBtn');
-        const portraitBtn = document.getElementById('portraitBtn');
-        const darkBtn = document.getElementById('darkBtn');
-        const lightBtn = document.getElementById('lightBtn');
-        const orientationBadge = document.getElementById('orientationBadge');
-        const outputOriText = document.getElementById('outputOriText');
-        const cameraOriText = document.getElementById('cameraOriText');
-        const bgOriText = document.getElementById('bgOriText');
-        const warningStatus = document.getElementById('warningStatus');
-        
-        let bgCtx, resultCtx;
-        
-        // Dimensions
-        let outputWidth = 1280;
-        let outputHeight = 720;
-        let camWidth = 640, camHeight = 480;
-        let bgWidth = 0, bgHeight = 0;
         
         // ==================== THEME ====================
         function setTheme(theme) {
-            currentTheme = theme;
             if (theme === 'dark') {
                 document.body.classList.remove('light-mode');
-                darkBtn.classList.add('active');
-                lightBtn.classList.remove('active');
+                document.querySelectorAll('.theme-btn').forEach(btn => btn.classList.remove('active'));
+                document.querySelector('.theme-btn:first-child').classList.add('active');
             } else {
                 document.body.classList.add('light-mode');
-                lightBtn.classList.add('active');
-                darkBtn.classList.remove('active');
+                document.querySelectorAll('.theme-btn').forEach(btn => btn.classList.remove('active'));
+                document.querySelector('.theme-btn:last-child').classList.add('active');
             }
             localStorage.setItem('theme', theme);
-            updateStatus(`${theme} mode`);
         }
         
-        // ==================== OUTPUT ORIENTATION ====================
-        function setOutputOrientation(orientation) {
-            outputOrientation = orientation;
-            
-            if (orientation === 'landscape') {
-                landscapeBtn.classList.add('active');
-                portraitBtn.classList.remove('active');
-                outputWidth = 1280;
-                outputHeight = 720;
-                orientationBadge.textContent = '16:9';
-                outputOriText.textContent = 'landscape 16:9';
-                updateStatus('output: landscape mode (16:9)');
-            } else {
-                portraitBtn.classList.add('active');
-                landscapeBtn.classList.remove('active');
-                outputWidth = 720;
-                outputHeight = 1280;
-                orientationBadge.textContent = '9:16';
-                outputOriText.textContent = 'portrait 9:16';
-                updateStatus('output: portrait mode (9:16)');
-            }
-            
-            // Update result container aspect ratio
-            resultContainer.classList.remove('landscape-mode', 'portrait-mode');
-            resultContainer.classList.add(`${orientation}-mode`);
-            
-            // Resize canvases
-            if (resultCtx) {
-                resultCanvasElem.width = outputWidth;
-                resultCanvasElem.height = outputHeight;
-            }
-            if (bgCtx) {
-                bgCanvasElem.width = outputWidth;
-                bgCanvasElem.height = outputHeight;
-                if (bgImageObj) {
-                    drawBackgroundOnCanvas();
-                } else {
-                    drawDefaultBackground();
-                }
-            }
-            
-            checkAndShowWarning();
-        }
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'light') setTheme('light');
         
-        // ==================== FIT MODE ====================
-        function setCameraFitMode(mode) {
-            cameraFitMode = mode;
-            updateStatus(`camera fit: ${mode}`);
-            checkAndShowWarning();
-        }
-        
-        function setLetterboxColor(color) {
-            letterboxColor = color;
-        }
-        
-        function resetFitDefaults() {
-            document.getElementById('cameraFitMode').value = 'contain';
-            document.getElementById('letterboxColor').value = '#000000';
-            cameraFitMode = 'contain';
-            letterboxColor = '#000000';
-            updateStatus("fit settings reset to default (contain)");
-            checkAndShowWarning();
-        }
-        
-        // ==================== WARNING & INFO ====================
-        function checkAndShowWarning() {
-            const camAspect = camWidth / camHeight;
-            const outputAspect = outputWidth / outputHeight;
-            const bgAspect = bgWidth > 0 ? bgWidth / bgHeight : outputAspect;
+        // ==================== UPDATE PREVIEW ====================
+        function updatePreviewSize() {
+            if (!resultCanvasElem || !bgCanvasElem) return;
             
-            let warnings = [];
-            
-            if (Math.abs(camAspect - outputAspect) > 0.05) {
-                warnings.push(`📐 camera aspect (${camAspect.toFixed(2)}) berbeda dengan output (${outputAspect.toFixed(2)})`);
-                if (cameraFitMode === 'contain') {
-                    warnings.push(`   → akan ada letterbox (area hitam) di ${camAspect > outputAspect ? 'atas/bawah' : 'kiri/kanan'}`);
-                } else if (cameraFitMode === 'cover') {
-                    warnings.push(`   → akan ada crop (potongan) di ${camAspect > outputAspect ? 'kiri/kanan' : 'atas/bawah'}`);
-                }
+            // Result canvas tetap ukuran asli untuk kualitas capture
+            if (videoWidth > 0 && videoHeight > 0) {
+                resultCanvasElem.width = videoWidth;
+                resultCanvasElem.height = videoHeight;
+                bgCanvasElem.width = videoWidth;
+                bgCanvasElem.height = videoHeight;
             }
             
-            if (bgAspect > 0 && Math.abs(bgAspect - outputAspect) > 0.05 && bgImageObj) {
-                warnings.push(`🖼️ background aspect (${bgAspect.toFixed(2)}) berbeda dengan output`);
-                warnings.push(`   → gunakan zoom & posisi untuk menyesuaikan`);
-            }
-            
-            if (warnings.length > 0) {
-                warningStatus.style.display = 'block';
-                warningStatus.innerHTML = `⚠️ ${warnings.join('<br>⚠️ ')}`;
-            } else {
-                warningStatus.style.display = 'none';
-            }
-            
-            // Update orientation text
-            const camOri = camWidth > camHeight ? 'landscape' : (camWidth < camHeight ? 'portrait' : 'square');
-            cameraOriText.textContent = `${camOri} ${camWidth}×${camHeight}`;
-            
-            if (bgImageObj) {
-                const bgOri = bgWidth > bgHeight ? 'landscape' : (bgWidth < bgHeight ? 'portrait' : 'square');
-                bgOriText.textContent = `${bgOri} ${bgWidth}×${bgHeight}`;
-            } else {
-                bgOriText.textContent = 'default';
-            }
+            // Tampilkan info webcam
+            document.getElementById('webcamInfo').textContent = 
+                videoWidth > 0 ? `${videoWidth}×${videoHeight} | ${videoWidth/videoHeight > 1.2 ? 'landscape' : 'portrait'}` : 'menunggu webcam...';
         }
         
         // ==================== DRAW BACKGROUND ====================
-        function drawDefaultBackground() {
+        function drawBackgroundWithTransform() {
             if (!bgCtx) return;
-            const w = outputWidth;
-            const h = outputHeight;
             
-            bgCtx.fillStyle = '#1a1a1a';
-            bgCtx.fillRect(0, 0, w, h);
-            bgCtx.fillStyle = '#ffffff';
-            bgCtx.font = `${Math.floor(Math.min(w, h) * 0.05)}px sans-serif`;
-            bgCtx.textAlign = 'center';
-            bgCtx.fillText('background', w/2, h/2);
-            bgCtx.font = `${Math.floor(Math.min(w, h) * 0.03)}px sans-serif`;
-            bgCtx.fillStyle = '#808080';
-            bgCtx.fillText('upload image', w/2, h/2 + 40);
-        }
-        
-        function drawBackgroundOnCanvas() {
-            if (!bgCtx || !bgImageObj) {
-                drawDefaultBackground();
+            const w = videoWidth || 1280;
+            const h = videoHeight || 720;
+            
+            if (!bgImageObj) {
+                // Default gradient background
+                const gradient = bgCtx.createLinearGradient(0, 0, w, h);
+                gradient.addColorStop(0, '#2a2a2a');
+                gradient.addColorStop(0.5, '#1a1a1a');
+                gradient.addColorStop(1, '#0a0a0a');
+                bgCtx.fillStyle = gradient;
+                bgCtx.fillRect(0, 0, w, h);
+                bgCtx.fillStyle = '#ffffff';
+                bgCtx.font = `${Math.floor(Math.min(w, h) * 0.05)}px sans-serif`;
+                bgCtx.textAlign = 'center';
+                bgCtx.fillText('background', w/2, h/2);
                 return;
             }
             
-            const w = outputWidth;
-            const h = outputHeight;
-            
-            bgCtx.fillStyle = '#000000';
-            bgCtx.fillRect(0, 0, w, h);
+            bgCtx.clearRect(0, 0, w, h);
             
             const zoomFactor = bgZoom / 100;
             let imgW = bgImageObj.width * zoomFactor;
@@ -787,7 +669,16 @@
             let drawX = (w - imgW) / 2 + offsetX;
             let drawY = (h - imgH) / 2 + offsetY;
             
+            bgCtx.save();
+            if (bgRotate !== 0) {
+                const centerX = drawX + imgW / 2;
+                const centerY = drawY + imgH / 2;
+                bgCtx.translate(centerX, centerY);
+                bgCtx.rotate(bgRotate * Math.PI / 180);
+                bgCtx.translate(-centerX, -centerY);
+            }
             bgCtx.drawImage(bgImageObj, drawX, drawY, imgW, imgH);
+            bgCtx.restore();
         }
         
         // ==================== RESET FUNCTIONS ====================
@@ -823,16 +714,19 @@
             bgZoom = 100;
             bgPosX = 0;
             bgPosY = 0;
+            bgRotate = 0;
             document.getElementById('bgZoom').value = 100;
             document.getElementById('bgPosX').value = 0;
             document.getElementById('bgPosY').value = 0;
+            document.getElementById('bgRotate').value = 0;
             document.getElementById('zoomValue').textContent = '100%';
             document.getElementById('posXValue').textContent = '0';
             document.getElementById('posYValue').textContent = '0';
+            document.getElementById('rotateValue').textContent = '0°';
             if (bgImageObj) {
-                drawBackgroundOnCanvas();
+                drawBackgroundWithTransform();
             } else {
-                drawDefaultBackground();
+                drawBackgroundWithTransform();
             }
             updateStatus("background transform reset");
         }
@@ -858,28 +752,19 @@
                 
                 webcam.onloadedmetadata = () => {
                     webcam.play().then(() => {
-                        camWidth = webcam.videoWidth;
-                        camHeight = webcam.videoHeight;
+                        // Get actual video dimensions
+                        videoWidth = webcam.videoWidth;
+                        videoHeight = webcam.videoHeight;
                         
+                        // Initialize canvases dengan ukuran asli
                         bgCtx = bgCanvasElem.getContext('2d');
                         resultCtx = resultCanvasElem.getContext('2d');
                         
-                        resultCanvasElem.width = outputWidth;
-                        resultCanvasElem.height = outputHeight;
-                        bgCanvasElem.width = outputWidth;
-                        bgCanvasElem.height = outputHeight;
-                        
-                        setOutputOrientation(outputOrientation);
-                        drawDefaultBackground();
-                        
-                        // Set camera fit mode from select
-                        cameraFitMode = document.getElementById('cameraFitMode').value;
-                        letterboxColor = document.getElementById('letterboxColor').value;
+                        updatePreviewSize();
+                        drawBackgroundWithTransform();
                         
                         isWebcamReady = true;
-                        document.getElementById('webcamInfo').textContent = `${camWidth}×${camHeight} | camera ready`;
-                        updateStatus(`camera ready | ${camWidth}x${camHeight}`);
-                        checkAndShowWarning();
+                        updateStatus(`camera ready | ${videoWidth}x${videoHeight}`);
                     }).catch(e => updateStatus("error: " + e.message));
                 };
             } catch (err) {
@@ -888,7 +773,6 @@
                     const stream = await navigator.mediaDevices.getUserMedia({ video: true });
                     webcam.srcObject = stream;
                     updateStatus("compatibility mode");
-                    isWebcamReady = true;
                 } catch (e) {
                     updateStatus("cannot access camera");
                 }
@@ -896,9 +780,7 @@
         }
         
         function updateStatus(message) {
-            const themeStatus = currentTheme === 'dark' ? 'dark' : 'light';
-            const orientationStatus = outputOrientation === 'landscape' ? 'landscape' : 'portrait';
-            document.getElementById('status').textContent = `● ${message} | ${themeStatus} | ${orientationStatus}`;
+            document.getElementById('status').textContent = `● ${message}`;
         }
         
         function switchTab(tabName, event) {
@@ -909,8 +791,7 @@
                 const btns = document.querySelectorAll('.tab-btn');
                 if (tabName === 'basic') btns[0].classList.add('active');
                 else if (tabName === 'advanced') btns[1].classList.add('active');
-                else if (tabName === 'background') btns[2].classList.add('active');
-                else btns[3].classList.add('active');
+                else btns[2].classList.add('active');
             }
             document.getElementById(`tab-${tabName}`).classList.add('active');
         }
@@ -939,28 +820,26 @@
         document.getElementById('flipMode').addEventListener('change', (e) => {
             flipHorizontal = e.target.value === 'flip';
         });
-        document.getElementById('cameraFitMode').addEventListener('change', (e) => {
-            cameraFitMode = e.target.value;
-            checkAndShowWarning();
-        });
-        document.getElementById('letterboxColor').addEventListener('input', (e) => {
-            letterboxColor = e.target.value;
-        });
         
         document.getElementById('bgZoom').addEventListener('input', (e) => {
             bgZoom = parseInt(e.target.value);
             document.getElementById('zoomValue').textContent = bgZoom + '%';
-            if (bgImageObj) drawBackgroundOnCanvas();
+            if (bgImageObj || true) drawBackgroundWithTransform();
         });
         document.getElementById('bgPosX').addEventListener('input', (e) => {
             bgPosX = parseInt(e.target.value);
             document.getElementById('posXValue').textContent = bgPosX;
-            if (bgImageObj) drawBackgroundOnCanvas();
+            if (bgImageObj || true) drawBackgroundWithTransform();
         });
         document.getElementById('bgPosY').addEventListener('input', (e) => {
             bgPosY = parseInt(e.target.value);
             document.getElementById('posYValue').textContent = bgPosY;
-            if (bgImageObj) drawBackgroundOnCanvas();
+            if (bgImageObj || true) drawBackgroundWithTransform();
+        });
+        document.getElementById('bgRotate').addEventListener('input', (e) => {
+            bgRotate = parseInt(e.target.value);
+            document.getElementById('rotateValue').textContent = bgRotate + '°';
+            if (bgImageObj || true) drawBackgroundWithTransform();
         });
         
         document.getElementById('bgUpload').addEventListener('change', (e) => {
@@ -971,11 +850,8 @@
                     const img = new Image();
                     img.onload = () => {
                         bgImageObj = img;
-                        bgWidth = img.width;
-                        bgHeight = img.height;
-                        drawBackgroundOnCanvas();
+                        drawBackgroundWithTransform();
                         updateStatus("background uploaded");
-                        checkAndShowWarning();
                     };
                     img.src = event.target.result;
                 };
@@ -985,75 +861,31 @@
         
         // ==================== GREEN SCREEN PROCESSING ====================
         function applyGreenScreen() {
-            if (!isWebcamReady || !webcam.videoWidth) return false;
+            if (!isWebcamReady || !webcam.videoWidth || videoWidth === 0) return false;
             
             try {
                 const now = performance.now();
                 if (now - lastProcessTime < fpsInterval) return true;
                 lastProcessTime = now;
                 
-                const w = outputWidth;
-                const h = outputHeight;
+                const w = videoWidth;
+                const h = videoHeight;
                 
-                // Create temporary canvas for webcam frame
+                // Create temporary canvas untuk processing
                 const tempCanvas = document.createElement('canvas');
                 tempCanvas.width = w;
                 tempCanvas.height = h;
                 const tempCtx = tempCanvas.getContext('2d');
                 
-                // Fill with letterbox color
-                tempCtx.fillStyle = letterboxColor;
-                tempCtx.fillRect(0, 0, w, h);
-                
-                // Calculate camera draw position based on fit mode
-                const camAspect = camWidth / camHeight;
-                const targetAspect = w / h;
-                
-                let drawW, drawH, drawX, drawY;
-                
-                if (cameraFitMode === 'fill') {
-                    // Stretch to fill exactly (may distort)
-                    drawW = w;
-                    drawH = h;
-                    drawX = 0;
-                    drawY = 0;
-                } else if (cameraFitMode === 'cover') {
-                    // Cover entire area (may crop)
-                    if (camAspect > targetAspect) {
-                        drawW = camAspect * h;
-                        drawH = h;
-                        drawX = (w - drawW) / 2;
-                        drawY = 0;
-                    } else {
-                        drawW = w;
-                        drawH = w / camAspect;
-                        drawX = 0;
-                        drawY = (h - drawH) / 2;
-                    }
-                } else {
-                    // Contain (default) - show all with letterbox
-                    if (camAspect > targetAspect) {
-                        drawH = h;
-                        drawW = camAspect * drawH;
-                        drawX = (w - drawW) / 2;
-                        drawY = 0;
-                    } else {
-                        drawW = w;
-                        drawH = drawW / camAspect;
-                        drawX = 0;
-                        drawY = (h - drawH) / 2;
-                    }
-                }
-                
-                // Draw webcam with flip if needed
-                tempCtx.save();
+                // Draw webcam frame
                 if (flipHorizontal) {
+                    tempCtx.save();
                     tempCtx.scale(-1, 1);
-                    tempCtx.drawImage(webcam, -drawX - drawW, drawY, drawW, drawH);
+                    tempCtx.drawImage(webcam, -w, 0, w, h);
+                    tempCtx.restore();
                 } else {
-                    tempCtx.drawImage(webcam, drawX, drawY, drawW, drawH);
+                    tempCtx.drawImage(webcam, 0, 0, w, h);
                 }
-                tempCtx.restore();
                 
                 const webcamData = tempCtx.getImageData(0, 0, w, h);
                 const bgData = bgCtx.getImageData(0, 0, w, h);
@@ -1067,7 +899,6 @@
                     const r = webcamPixels[i];
                     const g = webcamPixels[i + 1];
                     const b = webcamPixels[i + 2];
-                    
                     const dr = r - keyColor[0];
                     const dg = g - keyColor[1];
                     const db = b - keyColor[2];
@@ -1102,7 +933,7 @@
         }
         
         function processFrame() {
-            if (isWebcamReady) {
+            if (isWebcamReady && videoWidth > 0) {
                 applyGreenScreen();
             }
             animationFrame = requestAnimationFrame(processFrame);
@@ -1112,14 +943,13 @@
         window.captureResult = function() {
             try {
                 const link = document.createElement('a');
-                const orientationSuffix = outputOrientation === 'landscape' ? 'landscape' : 'portrait';
-                link.download = `greenscreen-${orientationSuffix}-${Date.now()}.png`;
+                link.download = `greenscreen-${Date.now()}.png`;
                 resultCanvasElem.toBlob((blob) => {
                     const url = URL.createObjectURL(blob);
                     link.href = url;
                     link.click();
                     URL.revokeObjectURL(url);
-                    updateStatus(`captured in ${outputOrientation} mode`);
+                    updateStatus("captured in original resolution");
                 }, 'image/png', 0.95);
             } catch (error) {
                 updateStatus("capture failed");
@@ -1127,14 +957,6 @@
         };
         
         // ==================== START ====================
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme === 'light') setTheme('light');
-        else setTheme('dark');
-        
-        // Set initial fit mode listeners
-        document.getElementById('cameraFitMode').addEventListener('change', (e) => setCameraFitMode(e.target.value));
-        document.getElementById('letterboxColor').addEventListener('input', (e) => setLetterboxColor(e.target.value));
-        
         initWebcam();
         processFrame();
         
