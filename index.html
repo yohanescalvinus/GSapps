@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Green Screen Studio - Advanced Background Control</title>
+    <title>Green Screen Studio - Perfect Aspect Ratio</title>
     <style>
         * {
             margin: 0;
@@ -26,7 +26,6 @@
             --accent-secondary: #e0e0e0;
             --card-bg: rgba(20, 20, 20, 0.7);
             --button-primary: #2a2a2a;
-            --button-primary-hover: #3a3a3a;
             --button-secondary: #1f1f1f;
             --status-bg: rgba(0, 0, 0, 0.6);
             --shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
@@ -45,20 +44,16 @@
             --text-secondary: #4a4a4a;
             --text-tertiary: #8a8a8a;
             --accent-color: #1a1a1a;
-            --accent-secondary: #2a2a2a;
-            --card-bg: rgba(255, 255, 255, 0.8);
             --button-primary: #e8e8e8;
-            --button-primary-hover: #d8d8d8;
             --button-secondary: #f5f5f5;
             --status-bg: rgba(255, 255, 255, 0.85);
             --shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
-            --input-bg: rgba(245, 245, 245, 0.9);
             --slider-track: #e0e0e0;
             --slider-thumb: #1a1a1a;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
             background: var(--bg-primary);
             min-height: 100vh;
             padding: 12px;
@@ -96,7 +91,6 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            flex-wrap: wrap;
         }
 
         .theme-toggle {
@@ -116,7 +110,6 @@
             cursor: pointer;
             font-size: 0.75rem;
             font-weight: 500;
-            transition: all 0.3s;
             background: transparent;
             color: var(--text-primary);
         }
@@ -143,6 +136,7 @@
             margin-bottom: 12px;
         }
 
+        /* Panel Hasil - Mengikuti Aspect Ratio Webcam */
         .result-panel {
             background: var(--glass-bg);
             backdrop-filter: blur(16px);
@@ -163,10 +157,10 @@
             gap: 8px;
         }
 
+        /* Container result - akan diatur dinamis sesuai aspect ratio webcam */
         .result-container {
             position: relative;
             width: 100%;
-            padding-bottom: 56.25%;
             background: var(--bg-tertiary);
             border-radius: 12px;
             overflow: hidden;
@@ -174,13 +168,9 @@
         }
 
         .result-container canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
             width: 100%;
-            height: 100%;
+            height: auto;
             display: block;
-            object-fit: contain;
             background: var(--bg-secondary);
         }
 
@@ -206,29 +196,12 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 4px;
             color: var(--text-secondary);
-        }
-
-        .bg-controls-mini {
-            display: flex;
-            gap: 4px;
-        }
-
-        .icon-btn {
-            background: var(--button-secondary);
-            border: 1px solid var(--glass-border);
-            color: var(--text-primary);
-            padding: 4px 8px;
-            border-radius: 8px;
-            font-size: 0.65rem;
-            cursor: pointer;
         }
 
         .webcam-container, .bg-container {
             position: relative;
             width: 100%;
-            padding-bottom: 56.25%;
             background: var(--bg-tertiary);
             border-radius: 10px;
             overflow: hidden;
@@ -236,13 +209,11 @@
         }
 
         .webcam-container video, .bg-container canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
             width: 100%;
-            height: 100%;
+            height: auto;
             display: block;
-            object-fit: cover;
+            object-fit: contain;
+            background: var(--bg-secondary);
         }
 
         .status-bar {
@@ -439,27 +410,13 @@
             .source-grid {
                 gap: 8px;
             }
-            .source-panel, .background-panel {
-                padding: 8px;
-            }
-        }
-
-        ::-webkit-scrollbar {
-            width: 4px;
-        }
-        ::-webkit-scrollbar-track {
-            background: var(--bg-tertiary);
-        }
-        ::-webkit-scrollbar-thumb {
-            background: var(--text-tertiary);
-            border-radius: 2px;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>green screen <span class="resolution-badge">2K</span></h1>
+            <h1>green screen <span class="resolution-badge">adaptive</span></h1>
             <div class="theme-toggle">
                 <button class="theme-btn active" onclick="setTheme('dark')">dark</button>
                 <button class="theme-btn" onclick="setTheme('light')">light</button>
@@ -468,29 +425,24 @@
 
         <div class="main-layout">
             <div class="result-panel glass-card">
-                <h2>result <span class="resolution-badge">2K</span></h2>
-                <div class="result-container">
-                    <canvas id="resultCanvas" width="2560" height="1440"></canvas>
+                <h2>result <span class="resolution-badge" id="resultRatioBadge">auto</span></h2>
+                <div class="result-container" id="resultContainer">
+                    <canvas id="resultCanvas"></canvas>
                 </div>
             </div>
             
             <div class="source-grid">
                 <div class="source-panel glass-card">
                     <h3>webcam</h3>
-                    <div class="webcam-container">
+                    <div class="webcam-container" id="webcamContainer">
                         <video id="webcam" autoplay playsinline muted></video>
                     </div>
                 </div>
                 
                 <div class="background-panel glass-card">
-                    <h3>
-                        background
-                        <div class="bg-controls-mini">
-                            <button class="icon-btn" onclick="resetBackgroundTransform()">↺</button>
-                        </div>
-                    </h3>
-                    <div class="bg-container">
-                        <canvas id="backgroundCanvas" width="2560" height="1440"></canvas>
+                    <h3>background</h3>
+                    <div class="bg-container" id="bgContainer">
+                        <canvas id="backgroundCanvas"></canvas>
                     </div>
                 </div>
             </div>
@@ -519,7 +471,7 @@
                     <input type="range" id="smoothness" min="0" max="0.3" step="0.01" value="0.15">
                 </div>
                 <div class="button-group">
-                    <button class="reset-default-btn" onclick="resetBasicDefaults()">reset</button>
+                    <button onclick="resetBasicDefaults()">reset</button>
                 </div>
             </div>
 
@@ -527,16 +479,16 @@
                 <div class="control-item">
                     <label>quality</label>
                     <select id="qualityMode">
-                        <option value="high">high (2K)</option>
-                        <option value="medium" selected>medium (HD)</option>
-                        <option value="low">low (fast)</option>
+                        <option value="high">high</option>
+                        <option value="medium" selected>medium</option>
+                        <option value="low">low</option>
                     </select>
                 </div>
                 <div class="control-item">
                     <label>frame rate</label>
                     <select id="fpsLimit">
                         <option value="30">30 fps</option>
-                        <option value="15" selected>15 fps (balance)</option>
+                        <option value="15" selected>15 fps</option>
                         <option value="10">10 fps</option>
                     </select>
                 </div>
@@ -555,7 +507,7 @@
                     </select>
                 </div>
                 <div class="button-group">
-                    <button class="reset-default-btn" onclick="resetAdvancedDefaults()">reset</button>
+                    <button onclick="resetAdvancedDefaults()">reset</button>
                 </div>
             </div>
 
@@ -581,25 +533,44 @@
                     <input type="range" id="bgRotate" min="0" max="360" step="5" value="0">
                 </div>
                 <div class="button-group">
-                    <button class="btn-reset" onclick="resetBackground()">reset bg</button>
+                    <button onclick="resetBackgroundTransform()">reset transform</button>
                     <button class="btn-capture" onclick="captureResult()">capture</button>
                 </div>
-                <div class="info-text">adjust background to match your orientation</div>
             </div>
         </div>
 
-        <div class="orientation-guide"><span>↻</span> landscape for wider view</div>
+        <div class="orientation-guide"><span>↻</span> rotate for better view</div>
     </div>
 
     <script>
-        // ==================== BACKGROUND TRANSFORM VARIABLES ====================
+        // ==================== VARIABLES ====================
+        let videoWidth = 0, videoHeight = 0;
         let bgImageObj = null;
-        let bgZoom = 100;
-        let bgPosX = 0;
-        let bgPosY = 0;
-        let bgRotate = 0;
+        let bgZoom = 100, bgPosX = 0, bgPosY = 0, bgRotate = 0;
         
-        // ==================== THEME MANAGEMENT ====================
+        let keyColor = [0, 255, 0];
+        let tolerance = 0.35;
+        let smoothness = 0.15;
+        let isWebcamReady = false;
+        let animationFrame = null;
+        let lastProcessTime = 0;
+        let fpsInterval = 1000 / 15;
+        let flipHorizontal = true;
+        
+        let processWidth = 1280;
+        let processHeight = 720;
+        
+        // ==================== DOM ELEMENTS ====================
+        const webcam = document.getElementById('webcam');
+        const bgCanvas = document.getElementById('backgroundCanvas');
+        const resultCanvas = document.getElementById('resultCanvas');
+        const resultContainer = document.getElementById('resultContainer');
+        const webcamContainer = document.getElementById('webcamContainer');
+        const bgContainer = document.getElementById('bgContainer');
+        
+        let bgCtx, resultCtx;
+        
+        // ==================== THEME ====================
         function setTheme(theme) {
             if (theme === 'dark') {
                 document.body.classList.remove('light-mode');
@@ -611,12 +582,91 @@
                 document.querySelector('.theme-btn:last-child').classList.add('active');
             }
             localStorage.setItem('theme', theme);
-            updateStatus(`theme: ${theme} mode`);
         }
-
+        
         const savedTheme = localStorage.getItem('theme');
         if (savedTheme === 'light') setTheme('light');
-
+        
+        // ==================== UPDATE ASPECT RATIO ====================
+        function updateAspectRatios() {
+            if (videoWidth === 0 || videoHeight === 0) return;
+            
+            const aspectRatio = videoWidth / videoHeight;
+            const containerWidth = resultContainer.clientWidth;
+            const containerHeight = containerWidth / aspectRatio;
+            
+            // Set result canvas size sesuai aspect ratio video
+            resultCanvas.width = videoWidth;
+            resultCanvas.height = videoHeight;
+            resultCanvas.style.width = '100%';
+            resultCanvas.style.height = 'auto';
+            
+            // Set background canvas size sama dengan video
+            bgCanvas.width = videoWidth;
+            bgCanvas.height = videoHeight;
+            bgCanvas.style.width = '100%';
+            bgCanvas.style.height = 'auto';
+            
+            // Update background image jika ada
+            if (bgImageObj) {
+                drawBackgroundWithTransform();
+            } else {
+                drawDefaultBackground();
+            }
+            
+            // Update badge
+            const ratioText = aspectRatio > 1.2 ? 'landscape' : (aspectRatio < 0.9 ? 'portrait' : 'square');
+            document.getElementById('resultRatioBadge').textContent = ratioText;
+            
+            // Adjust container height
+            resultContainer.style.height = 'auto';
+            webcamContainer.style.height = 'auto';
+            bgContainer.style.height = 'auto';
+        }
+        
+        // ==================== DRAW BACKGROUND ====================
+        function drawDefaultBackground() {
+            if (!bgCtx) return;
+            const w = videoWidth || 1280;
+            const h = videoHeight || 720;
+            bgCtx.fillStyle = '#1a1a1a';
+            bgCtx.fillRect(0, 0, w, h);
+            bgCtx.fillStyle = '#ffffff';
+            bgCtx.font = `${Math.floor(Math.min(w, h) * 0.05)}px sans-serif`;
+            bgCtx.textAlign = 'center';
+            bgCtx.fillText('background', w/2, h/2);
+        }
+        
+        function drawBackgroundWithTransform() {
+            if (!bgImageObj || !bgCtx) return;
+            
+            const w = videoWidth || bgImageObj.width;
+            const h = videoHeight || bgImageObj.height;
+            
+            bgCtx.clearRect(0, 0, w, h);
+            
+            const zoomFactor = bgZoom / 100;
+            let imgW = bgImageObj.width * zoomFactor;
+            let imgH = bgImageObj.height * zoomFactor;
+            
+            const offsetX = (bgPosX / 100) * w;
+            const offsetY = (bgPosY / 100) * h;
+            
+            let drawX = (w - imgW) / 2 + offsetX;
+            let drawY = (h - imgH) / 2 + offsetY;
+            
+            bgCtx.save();
+            if (bgRotate !== 0) {
+                const centerX = drawX + imgW / 2;
+                const centerY = drawY + imgH / 2;
+                bgCtx.translate(centerX, centerY);
+                bgCtx.rotate(bgRotate * Math.PI / 180);
+                bgCtx.translate(-centerX, -centerY);
+            }
+            bgCtx.drawImage(bgImageObj, drawX, drawY, imgW, imgH);
+            bgCtx.restore();
+        }
+        
         // ==================== RESET FUNCTIONS ====================
         function resetBasicDefaults() {
             document.getElementById('keyColor').value = '#00ff00';
@@ -632,8 +682,8 @@
         
         function resetAdvancedDefaults() {
             document.getElementById('qualityMode').value = 'medium';
-            PROCESS_WIDTH = 1280;
-            PROCESS_HEIGHT = 720;
+            processWidth = 1280;
+            processHeight = 720;
             document.getElementById('fpsLimit').value = '15';
             fpsInterval = 1000 / 15;
             const oldCameraMode = document.getElementById('cameraMode').value;
@@ -663,82 +713,58 @@
             document.getElementById('rotateValue').textContent = '0°';
             if (bgImageObj) {
                 drawBackgroundWithTransform();
+            } else {
+                drawDefaultBackground();
             }
             updateStatus("background transform reset");
         }
         
-        // ==================== DRAW BACKGROUND WITH TRANSFORM ====================
-        function drawBackgroundWithTransform() {
-            if (!bgImageObj) return;
-            
-            const ctx = bgCtx;
-            const w = WIDTH;
-            const h = HEIGHT;
-            
-            // Clear canvas
-            ctx.clearRect(0, 0, w, h);
-            
-            // Calculate dimensions based on zoom
-            const zoomFactor = bgZoom / 100;
-            let imgW = bgImageObj.width * zoomFactor;
-            let imgH = bgImageObj.height * zoomFactor;
-            
-            // Calculate position with offset
-            const offsetX = (bgPosX / 100) * w;
-            const offsetY = (bgPosY / 100) * h;
-            
-            // Center the image initially, then apply position offset
-            let drawX = (w - imgW) / 2 + offsetX;
-            let drawY = (h - imgH) / 2 + offsetY;
-            
-            ctx.save();
-            
-            // Apply rotation around center of image
-            if (bgRotate !== 0) {
-                const centerX = drawX + imgW / 2;
-                const centerY = drawY + imgH / 2;
-                ctx.translate(centerX, centerY);
-                ctx.rotate(bgRotate * Math.PI / 180);
-                ctx.translate(-centerX, -centerY);
+        // ==================== WEBCAM INIT ====================
+        async function initWebcam() {
+            try {
+                updateStatus("initializing camera...");
+                const cameraMode = document.getElementById('cameraMode').value;
+                const flipMode = document.getElementById('flipMode').value;
+                flipHorizontal = flipMode === 'flip';
+                
+                const constraints = {
+                    video: {
+                        facingMode: cameraMode,
+                        width: { ideal: 1920 },
+                        height: { ideal: 1080 }
+                    }
+                };
+                
+                const stream = await navigator.mediaDevices.getUserMedia(constraints);
+                webcam.srcObject = stream;
+                
+                webcam.onloadedmetadata = () => {
+                    webcam.play().then(() => {
+                        // Get actual video dimensions
+                        videoWidth = webcam.videoWidth;
+                        videoHeight = webcam.videoHeight;
+                        
+                        // Initialize canvases
+                        bgCtx = bgCanvas.getContext('2d');
+                        resultCtx = resultCanvas.getContext('2d');
+                        
+                        updateAspectRatios();
+                        isWebcamReady = true;
+                        updateStatus(`camera ready | ${videoWidth}x${videoHeight}`);
+                    }).catch(e => updateStatus("error: " + e.message));
+                };
+            } catch (err) {
+                updateStatus("camera access failed");
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                    webcam.srcObject = stream;
+                    updateStatus("compatibility mode");
+                } catch (e) {
+                    updateStatus("cannot access camera");
+                }
             }
-            
-            ctx.drawImage(bgImageObj, drawX, drawY, imgW, imgH);
-            ctx.restore();
         }
         
-        // ==================== DETEKSI MOBILE ====================
-        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-        
-        // ==================== KONFIGURASI ====================
-        const WIDTH = 2560;
-        const HEIGHT = 1440;
-        let PROCESS_WIDTH = 1280;
-        let PROCESS_HEIGHT = 720;
-        
-        // ==================== INISIALISASI ====================
-        const webcam = document.getElementById('webcam');
-        const bgCanvas = document.getElementById('backgroundCanvas');
-        const resultCanvas = document.getElementById('resultCanvas');
-        const bgCtx = bgCanvas.getContext('2d');
-        const resultCtx = resultCanvas.getContext('2d');
-        
-        bgCanvas.width = WIDTH;
-        bgCanvas.height = HEIGHT;
-        resultCanvas.width = WIDTH;
-        resultCanvas.height = HEIGHT;
-        
-        // ==================== VARIABEL ====================
-        let keyColor = [0, 255, 0];
-        let tolerance = 0.35;
-        let smoothness = 0.15;
-        let isWebcamReady = false;
-        let animationFrame = null;
-        let lastProcessTime = 0;
-        let fpsInterval = 1000 / 15;
-        let flipHorizontal = true;
-        
-        // ==================== FUNGSI ====================
         function updateStatus(message) {
             document.getElementById('status').textContent = `● ${message}`;
         }
@@ -756,71 +782,6 @@
             document.getElementById(`tab-${tabName}`).classList.add('active');
         }
         
-        // ==================== INISIALISASI WEBCAM ====================
-        async function initWebcam() {
-            try {
-                updateStatus("initializing camera...");
-                const cameraMode = document.getElementById('cameraMode').value;
-                const flipMode = document.getElementById('flipMode').value;
-                flipHorizontal = flipMode === 'flip';
-                
-                const constraints = {
-                    video: {
-                        facingMode: cameraMode,
-                        width: { ideal: isMobile ? 1280 : 1920 },
-                        height: { ideal: isMobile ? 720 : 1080 },
-                        frameRate: { ideal: 30 }
-                    }
-                };
-                if (isIOS) {
-                    constraints.video.width.ideal = 1280;
-                    constraints.video.height.ideal = 720;
-                }
-                
-                const stream = await navigator.mediaDevices.getUserMedia(constraints);
-                webcam.srcObject = stream;
-                webcam.onloadedmetadata = () => {
-                    webcam.play().then(() => {
-                        isWebcamReady = true;
-                        updateStatus("camera ready");
-                    }).catch(e => updateStatus("error: " + e.message));
-                };
-            } catch (err) {
-                updateStatus("camera access failed");
-                try {
-                    const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-                    webcam.srcObject = stream;
-                    updateStatus("compatibility mode");
-                    isWebcamReady = true;
-                } catch (e) {
-                    updateStatus("cannot access camera");
-                }
-            }
-        }
-        
-        // ==================== RESET BACKGROUND ====================
-        function resetBackground() {
-            resetBackgroundTransform();
-            if (!bgImageObj) {
-                const gradient = bgCtx.createLinearGradient(0, 0, WIDTH, HEIGHT);
-                gradient.addColorStop(0, '#2a2a2a');
-                gradient.addColorStop(0.5, '#1a1a1a');
-                gradient.addColorStop(1, '#0a0a0a');
-                bgCtx.fillStyle = gradient;
-                bgCtx.fillRect(0, 0, WIDTH, HEIGHT);
-                bgCtx.fillStyle = '#ffffff';
-                bgCtx.font = '300 32px sans-serif';
-                bgCtx.textAlign = 'center';
-                bgCtx.fillText('background', WIDTH/2, HEIGHT/2);
-                bgCtx.font = '300 20px sans-serif';
-                bgCtx.fillStyle = '#808080';
-                bgCtx.fillText('upload image', WIDTH/2, HEIGHT/2 + 50);
-            } else {
-                drawBackgroundWithTransform();
-            }
-            updateStatus("background reset");
-        }
-        
         // ==================== EVENT LISTENERS ====================
         document.getElementById('keyColor').addEventListener('input', (e) => {
             const hex = e.target.value;
@@ -836,9 +797,9 @@
         });
         document.getElementById('qualityMode').addEventListener('change', (e) => {
             const quality = e.target.value;
-            if (quality === 'high') { PROCESS_WIDTH = 1920; PROCESS_HEIGHT = 1080; }
-            else if (quality === 'medium') { PROCESS_WIDTH = 1280; PROCESS_HEIGHT = 720; }
-            else { PROCESS_WIDTH = 640; PROCESS_HEIGHT = 360; }
+            if (quality === 'high') { processWidth = 1920; processHeight = 1080; }
+            else if (quality === 'medium') { processWidth = 1280; processHeight = 720; }
+            else { processWidth = 640; processHeight = 360; }
         });
         document.getElementById('fpsLimit').addEventListener('change', (e) => {
             fpsInterval = 1000 / parseInt(e.target.value);
@@ -852,7 +813,6 @@
             flipHorizontal = e.target.value === 'flip';
         });
         
-        // Background transform controls
         document.getElementById('bgZoom').addEventListener('input', (e) => {
             bgZoom = parseInt(e.target.value);
             document.getElementById('zoomValue').textContent = bgZoom + '%';
@@ -883,7 +843,7 @@
                     img.onload = () => {
                         bgImageObj = img;
                         drawBackgroundWithTransform();
-                        updateStatus("background uploaded - use adjust controls");
+                        updateStatus("background uploaded");
                     };
                     img.src = event.target.result;
                 };
@@ -893,38 +853,37 @@
         
         // ==================== GREEN SCREEN PROCESSING ====================
         function applyGreenScreen() {
-            if (!isWebcamReady || webcam.readyState < 2) return false;
+            if (!isWebcamReady || !webcam.videoWidth || videoWidth === 0) return false;
+            
             try {
                 const now = performance.now();
                 if (now - lastProcessTime < fpsInterval) return true;
                 lastProcessTime = now;
                 
+                const targetW = videoWidth;
+                const targetH = videoHeight;
+                
                 const tempCanvas = document.createElement('canvas');
-                tempCanvas.width = PROCESS_WIDTH;
-                tempCanvas.height = PROCESS_HEIGHT;
+                tempCanvas.width = targetW;
+                tempCanvas.height = targetH;
                 const tempCtx = tempCanvas.getContext('2d');
                 
                 if (flipHorizontal) {
                     tempCtx.save();
                     tempCtx.scale(-1, 1);
-                    tempCtx.drawImage(webcam, -PROCESS_WIDTH, 0, PROCESS_WIDTH, PROCESS_HEIGHT);
+                    tempCtx.drawImage(webcam, -targetW, 0, targetW, targetH);
                     tempCtx.restore();
                 } else {
-                    tempCtx.drawImage(webcam, 0, 0, PROCESS_WIDTH, PROCESS_HEIGHT);
+                    tempCtx.drawImage(webcam, 0, 0, targetW, targetH);
                 }
                 
-                const webcamData = tempCtx.getImageData(0, 0, PROCESS_WIDTH, PROCESS_HEIGHT);
-                const bgTempCanvas = document.createElement('canvas');
-                bgTempCanvas.width = PROCESS_WIDTH;
-                bgTempCanvas.height = PROCESS_HEIGHT;
-                const bgTempCtx = bgTempCanvas.getContext('2d');
-                bgTempCtx.drawImage(bgCanvas, 0, 0, PROCESS_WIDTH, PROCESS_HEIGHT);
-                const bgData = bgTempCtx.getImageData(0, 0, PROCESS_WIDTH, PROCESS_HEIGHT);
-                const resultTempData = tempCtx.createImageData(PROCESS_WIDTH, PROCESS_HEIGHT);
+                const webcamData = tempCtx.getImageData(0, 0, targetW, targetH);
+                const bgData = bgCtx.getImageData(0, 0, targetW, targetH);
+                const resultData = resultCtx.createImageData(targetW, targetH);
                 
                 const webcamPixels = webcamData.data;
                 const bgPixels = bgData.data;
-                const resultPixels = resultTempData.data;
+                const resultPixels = resultData.data;
                 
                 for (let i = 0; i < webcamPixels.length; i += 4) {
                     const r = webcamPixels[i];
@@ -956,20 +915,21 @@
                     resultPixels[i + 3] = 255;
                 }
                 
-                const resultTempCanvas = document.createElement('canvas');
-                resultTempCanvas.width = PROCESS_WIDTH;
-                resultTempCanvas.height = PROCESS_HEIGHT;
-                resultTempCanvas.getContext('2d').putImageData(resultTempData, 0, 0);
-                resultCtx.drawImage(resultTempCanvas, 0, 0, WIDTH, HEIGHT);
+                resultCtx.putImageData(resultData, 0, 0);
                 return true;
-            } catch (error) { return false; }
+            } catch (error) {
+                return false;
+            }
         }
         
         function processFrame() {
-            if (isWebcamReady) applyGreenScreen();
+            if (isWebcamReady && videoWidth > 0) {
+                applyGreenScreen();
+            }
             animationFrame = requestAnimationFrame(processFrame);
         }
         
+        // ==================== CAPTURE ====================
         window.captureResult = function() {
             try {
                 const link = document.createElement('a');
@@ -980,20 +940,21 @@
                     link.click();
                     URL.revokeObjectURL(url);
                     updateStatus("captured");
-                    if (isMobile) setTimeout(() => alert('image saved'), 100);
                 }, 'image/png', 0.95);
-            } catch (error) { updateStatus("capture failed"); }
+            } catch (error) {
+                updateStatus("capture failed");
+            }
         };
         
-        window.resetBackground = resetBackground;
-        window.switchTab = switchTab;
-        window.setTheme = setTheme;
-        window.resetBasicDefaults = resetBasicDefaults;
-        window.resetAdvancedDefaults = resetAdvancedDefaults;
-        window.resetBackgroundTransform = resetBackgroundTransform;
+        // ==================== RESIZE OBSERVER ====================
+        const resizeObserver = new ResizeObserver(() => {
+            if (videoWidth > 0) {
+                updateAspectRatios();
+            }
+        });
+        resizeObserver.observe(resultContainer);
         
         // ==================== START ====================
-        resetBackground();
         initWebcam();
         processFrame();
         
