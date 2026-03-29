@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Green Screen Studio - Minimalist Theme</title>
+    <title>Green Screen Studio - Portrait Optimized</title>
     <style>
         * {
             margin: 0;
@@ -18,22 +18,21 @@
             --bg-primary: #0a0a0a;
             --bg-secondary: #111111;
             --bg-tertiary: #1a1a1a;
-            --glass-bg: rgba(10, 10, 10, 0.75);
-            --glass-border: rgba(255, 255, 255, 0.15);
+            --glass-bg: rgba(10, 10, 10, 0.85);
+            --glass-border: rgba(255, 255, 255, 0.12);
             --text-primary: #ffffff;
             --text-secondary: #b0b0b0;
-            --text-tertiary: #808080;
+            --text-tertiary: #6c6c6c;
             --accent-color: #ffffff;
             --accent-secondary: #e0e0e0;
-            --card-bg: rgba(20, 20, 20, 0.6);
+            --card-bg: rgba(20, 20, 20, 0.7);
             --button-primary: #2a2a2a;
             --button-primary-hover: #3a3a3a;
             --button-secondary: #1f1f1f;
             --button-secondary-hover: #2f2f2f;
             --status-bg: rgba(0, 0, 0, 0.6);
-            --shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-            --border-glow: 0 0 0 1px rgba(255, 255, 255, 0.1);
-            --input-bg: rgba(30, 30, 30, 0.8);
+            --shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+            --input-bg: rgba(30, 30, 30, 0.9);
             --slider-track: #2a2a2a;
             --slider-thumb: #ffffff;
         }
@@ -43,22 +42,21 @@
             --bg-primary: #f8f9fa;
             --bg-secondary: #ffffff;
             --bg-tertiary: #f0f0f0;
-            --glass-bg: rgba(255, 255, 255, 0.85);
-            --glass-border: rgba(0, 0, 0, 0.1);
+            --glass-bg: rgba(255, 255, 255, 0.9);
+            --glass-border: rgba(0, 0, 0, 0.08);
             --text-primary: #1a1a1a;
             --text-secondary: #4a4a4a;
-            --text-tertiary: #6c6c6c;
+            --text-tertiary: #8a8a8a;
             --accent-color: #1a1a1a;
             --accent-secondary: #2a2a2a;
-            --card-bg: rgba(255, 255, 255, 0.7);
-            --button-primary: #e5e5e5;
-            --button-primary-hover: #d5d5d5;
-            --button-secondary: #f0f0f0;
-            --button-secondary-hover: #e0e0e0;
-            --status-bg: rgba(255, 255, 255, 0.8);
-            --shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-            --border-glow: 0 0 0 1px rgba(0, 0, 0, 0.05);
-            --input-bg: rgba(240, 240, 240, 0.9);
+            --card-bg: rgba(255, 255, 255, 0.8);
+            --button-primary: #e8e8e8;
+            --button-primary-hover: #d8d8d8;
+            --button-secondary: #f5f5f5;
+            --button-secondary-hover: #e5e5e5;
+            --status-bg: rgba(255, 255, 255, 0.85);
+            --shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+            --input-bg: rgba(245, 245, 245, 0.9);
             --slider-track: #e0e0e0;
             --slider-thumb: #1a1a1a;
         }
@@ -67,68 +65,63 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
             background: var(--bg-primary);
             min-height: 100vh;
-            padding: 16px;
+            padding: 12px;
             transition: all 0.3s ease;
             color: var(--text-primary);
         }
 
-        /* Glassmorphism with Minimalist Aura */
+        /* Glassmorphism */
         .glass-card {
             background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             border: 1px solid var(--glass-border);
             box-shadow: var(--shadow);
-            transition: all 0.3s ease;
-        }
-
-        .glass-card:hover {
-            border-color: var(--accent-secondary);
         }
 
         .container {
-            max-width: 1400px;
+            max-width: 100%;
             margin: 0 auto;
         }
 
-        /* Minimalist Header */
+        /* Header Minimalis */
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
             flex-wrap: wrap;
-            gap: 12px;
+            gap: 10px;
             padding-bottom: 12px;
             border-bottom: 1px solid var(--glass-border);
         }
 
         h1 {
-            font-size: clamp(1.2rem, 5vw, 1.6rem);
+            font-size: clamp(1rem, 4.5vw, 1.4rem);
             font-weight: 500;
             display: flex;
             align-items: center;
             gap: 8px;
             flex-wrap: wrap;
-            letter-spacing: -0.5px;
+            letter-spacing: -0.3px;
         }
 
         .theme-toggle {
             display: flex;
-            gap: 8px;
+            gap: 6px;
             background: var(--glass-bg);
             backdrop-filter: blur(10px);
             border-radius: 40px;
-            padding: 4px;
+            padding: 3px;
             border: 1px solid var(--glass-border);
         }
 
         .theme-btn {
-            padding: 8px 20px;
+            padding: 6px 16px;
             border: none;
             border-radius: 36px;
             cursor: pointer;
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             font-weight: 500;
             transition: all 0.3s;
             background: transparent;
@@ -144,76 +137,40 @@
             display: inline-block;
             background: var(--accent-color);
             color: var(--bg-primary);
-            padding: 3px 10px;
+            padding: 2px 8px;
             border-radius: 20px;
-            font-size: 0.65rem;
+            font-size: 0.6rem;
             font-weight: 500;
-            letter-spacing: 0.5px;
         }
 
-        /* Layout Utama - Support Portrait & Landscape */
+        /* LAYOUT PORTRAIT OPTIMIZED */
         .main-layout {
             display: flex;
-            gap: 16px;
-            margin-bottom: 16px;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 12px;
         }
 
-        @media (orientation: portrait) {
-            .main-layout {
-                flex-direction: column;
-            }
-            .result-panel {
-                width: 100%;
-            }
-            .source-grid {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 12px;
-            }
-        }
-
-        @media (orientation: portrait) and (max-width: 480px) {
-            .source-grid {
-                grid-template-columns: 1fr;
-                gap: 12px;
-            }
-        }
-
-        @media (orientation: landscape) and (min-width: 768px) {
-            .main-layout {
-                flex-direction: row;
-            }
-            .result-panel {
-                flex: 1.5;
-            }
-            .source-grid {
-                flex: 1;
-                display: flex;
-                flex-direction: column;
-                gap: 12px;
-            }
-        }
-
-        /* Panel Hasil - Minimalist Focus */
+        /* Panel Hasil - Full Width di Portrait */
         .result-panel {
             background: var(--glass-bg);
-            backdrop-filter: blur(20px);
+            backdrop-filter: blur(16px);
             border-radius: 20px;
-            padding: 16px;
+            padding: 12px;
             border: 1px solid var(--glass-border);
+            width: 100%;
         }
 
         .result-panel h2 {
             text-align: center;
-            margin-bottom: 12px;
-            font-size: clamp(0.9rem, 4vw, 1.2rem);
+            margin-bottom: 10px;
+            font-size: clamp(0.85rem, 3.5vw, 1rem);
             font-weight: 500;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
-            flex-wrap: wrap;
-            letter-spacing: -0.3px;
+            letter-spacing: -0.2px;
             color: var(--text-primary);
         }
 
@@ -234,22 +191,29 @@
             background: var(--bg-secondary);
         }
 
-        /* Source Panels - Minimalist */
+        /* Grid Sumber - 2 Kolom di Portrait */
+        .source-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            width: 100%;
+        }
+
         .source-panel, .background-panel {
             background: var(--glass-bg);
-            backdrop-filter: blur(20px);
+            backdrop-filter: blur(16px);
             border-radius: 16px;
-            padding: 12px;
+            padding: 10px;
             border: 1px solid var(--glass-border);
         }
 
         .source-panel h3, .background-panel h3 {
-            margin-bottom: 10px;
-            font-size: clamp(0.8rem, 3vw, 0.95rem);
+            margin-bottom: 8px;
+            font-size: 0.75rem;
             font-weight: 500;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 4px;
             color: var(--text-secondary);
             letter-spacing: -0.2px;
         }
@@ -269,46 +233,45 @@
             object-fit: cover;
         }
 
-        /* Status Bar - Minimalist */
+        /* Status Bar */
         .status-bar {
             background: var(--status-bg);
             backdrop-filter: blur(12px);
-            border-radius: 12px;
-            padding: 10px 16px;
+            border-radius: 10px;
+            padding: 8px 12px;
             text-align: center;
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             margin: 12px 0;
             border-left: 2px solid var(--accent-color);
             color: var(--text-secondary);
             font-weight: 400;
-            letter-spacing: -0.2px;
         }
 
-        /* Kontrol Panel - Minimalist Glass */
+        /* Kontrol Panel - Compact untuk Portrait */
         .controls-panel {
             background: var(--glass-bg);
-            backdrop-filter: blur(20px);
+            backdrop-filter: blur(16px);
             border-radius: 20px;
-            padding: 16px;
-            margin-top: 12px;
+            padding: 12px;
+            margin-top: 8px;
             border: 1px solid var(--glass-border);
         }
 
         .control-tabs {
             display: flex;
-            gap: 8px;
-            margin-bottom: 20px;
+            gap: 6px;
+            margin-bottom: 16px;
             flex-wrap: wrap;
         }
 
         .tab-btn {
             flex: 1;
-            padding: 10px 12px;
+            padding: 8px 6px;
             background: transparent;
             border: 1px solid var(--glass-border);
             color: var(--text-secondary);
-            border-radius: 40px;
-            font-size: clamp(0.75rem, 3vw, 0.85rem);
+            border-radius: 30px;
+            font-size: 0.7rem;
             cursor: pointer;
             transition: all 0.3s;
             font-weight: 500;
@@ -329,15 +292,15 @@
         }
 
         .control-item {
-            margin-bottom: 18px;
+            margin-bottom: 14px;
         }
 
         .control-item label {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             color: var(--text-primary);
             font-weight: 500;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             letter-spacing: -0.2px;
         }
 
@@ -351,8 +314,8 @@
 
         .control-item input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
-            width: 20px;
-            height: 20px;
+            width: 18px;
+            height: 18px;
             background: var(--slider-thumb);
             border-radius: 50%;
             cursor: pointer;
@@ -362,7 +325,7 @@
 
         .control-item input[type="color"] {
             width: 100%;
-            height: 44px;
+            height: 40px;
             border: none;
             border-radius: 10px;
             cursor: pointer;
@@ -372,12 +335,12 @@
 
         .control-item select {
             width: 100%;
-            padding: 12px;
+            padding: 10px;
             border-radius: 10px;
             background: var(--input-bg);
             color: var(--text-primary);
             border: 1px solid var(--glass-border);
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: 400;
         }
 
@@ -385,14 +348,14 @@
             float: right;
             color: var(--text-tertiary);
             font-weight: 400;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
         }
 
         .button-group {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-top: 20px;
+            gap: 10px;
+            margin-top: 16px;
         }
 
         .reset-default-btn {
@@ -401,15 +364,11 @@
             border: 1px solid var(--glass-border);
         }
 
-        .reset-default-btn:hover {
-            background: var(--button-secondary-hover);
-        }
-
         button {
-            padding: 12px;
+            padding: 10px;
             border: none;
-            border-radius: 40px;
-            font-size: 0.85rem;
+            border-radius: 30px;
+            font-size: 0.75rem;
             font-weight: 500;
             cursor: pointer;
             transition: all 0.3s;
@@ -418,23 +377,14 @@
             border: 1px solid var(--glass-border);
         }
 
-        button:hover {
-            background: var(--button-primary-hover);
-            transform: translateY(-1px);
-        }
-
         button:active {
-            transform: translateY(0);
+            transform: scale(0.97);
         }
 
         .btn-capture {
             background: var(--accent-color);
             color: var(--bg-primary);
             border: none;
-        }
-
-        .btn-capture:hover {
-            opacity: 0.9;
         }
 
         .btn-reset {
@@ -444,22 +394,23 @@
 
         .info-text {
             color: var(--text-tertiary);
-            font-size: 0.7rem;
-            margin-top: 6px;
-            font-weight: 400;
+            font-size: 0.65rem;
+            margin-top: 5px;
+            text-align: center;
         }
 
+        /* Orientation Guide - Lebih Ramah */
         .orientation-guide {
             display: none;
             position: fixed;
-            bottom: 20px;
+            bottom: 10px;
             left: 50%;
             transform: translateX(-50%);
             background: var(--glass-bg);
             backdrop-filter: blur(12px);
-            padding: 6px 14px;
+            padding: 6px 12px;
             border-radius: 30px;
-            font-size: 0.65rem;
+            font-size: 0.6rem;
             z-index: 1000;
             pointer-events: none;
             white-space: nowrap;
@@ -475,9 +426,60 @@
             }
         }
 
-        /* Minimalist Scrollbar */
+        /* Responsif untuk layar sangat kecil */
+        @media (max-width: 480px) {
+            body {
+                padding: 8px;
+            }
+            
+            .source-grid {
+                gap: 8px;
+            }
+            
+            .source-panel, .background-panel {
+                padding: 8px;
+            }
+            
+            .control-tabs {
+                gap: 4px;
+            }
+            
+            .tab-btn {
+                padding: 6px 4px;
+                font-size: 0.65rem;
+            }
+            
+            button {
+                padding: 8px;
+                font-size: 0.7rem;
+            }
+        }
+
+        /* Landscape tetap optimal */
+        @media (orientation: landscape) and (min-width: 768px) {
+            .main-layout {
+                flex-direction: row;
+            }
+            
+            .result-panel {
+                flex: 1.5;
+            }
+            
+            .source-grid {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                gap: 12px;
+            }
+            
+            .source-panel, .background-panel {
+                flex: 1;
+            }
+        }
+
+        /* Scrollbar minimalis */
         ::-webkit-scrollbar {
-            width: 6px;
+            width: 4px;
         }
 
         ::-webkit-scrollbar-track {
@@ -486,16 +488,16 @@
 
         ::-webkit-scrollbar-thumb {
             background: var(--text-tertiary);
-            border-radius: 3px;
+            border-radius: 2px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Minimalist Header -->
+        <!-- Header Minimalis -->
         <div class="header">
             <h1>
-                green screen studio
+                green screen
                 <span class="resolution-badge">2K</span>
             </h1>
             <div class="theme-toggle">
@@ -504,9 +506,9 @@
             </div>
         </div>
 
-        <!-- Layout Utama -->
+        <!-- Layout Portrait Optimized -->
         <div class="main-layout">
-            <!-- Panel Hasil Utama -->
+            <!-- Panel Hasil - Full Width -->
             <div class="result-panel glass-card">
                 <h2>
                     result
@@ -517,10 +519,10 @@
                 </div>
             </div>
             
-            <!-- Grid Sumber -->
+            <!-- Grid Sumber - 2 Kolom -->
             <div class="source-grid">
                 <div class="source-panel glass-card">
-                    <h3>webcam input</h3>
+                    <h3>webcam</h3>
                     <div class="webcam-container">
                         <video id="webcam" autoplay playsinline muted></video>
                     </div>
@@ -540,12 +542,12 @@
             ● system ready
         </div>
 
-        <!-- Kontrol Panel -->
+        <!-- Kontrol Panel Compact -->
         <div class="controls-panel glass-card">
             <div class="control-tabs">
                 <button class="tab-btn active" onclick="switchTab('basic')">basic</button>
                 <button class="tab-btn" onclick="switchTab('advanced')">advanced</button>
-                <button class="tab-btn" onclick="switchTab('background')">background</button>
+                <button class="tab-btn" onclick="switchTab('background')">bg</button>
             </div>
 
             <!-- Tab Basic -->
@@ -566,9 +568,9 @@
                 </div>
                 
                 <div class="button-group">
-                    <button class="reset-default-btn" onclick="resetBasicDefaults()">reset default</button>
+                    <button class="reset-default-btn" onclick="resetBasicDefaults()">reset</button>
                 </div>
-                <div class="info-text">default: green | tolerance 0.35 | smooth 0.15</div>
+                <div class="info-text">default: green | 0.35 | 0.15</div>
             </div>
 
             <!-- Tab Advanced -->
@@ -608,9 +610,9 @@
                 </div>
                 
                 <div class="button-group">
-                    <button class="reset-default-btn" onclick="resetAdvancedDefaults()">reset default</button>
+                    <button class="reset-default-btn" onclick="resetAdvancedDefaults()">reset</button>
                 </div>
-                <div class="info-text">default: medium | 15 fps | front | mirror</div>
+                <div class="info-text">default: medium | 15fps | front | mirror</div>
             </div>
 
             <!-- Tab Background -->
@@ -629,7 +631,7 @@
 
         <!-- Orientation Guide -->
         <div class="orientation-guide">
-            <span>↻</span> landscape recommended
+            <span>↻</span> landscape for wider view
         </div>
     </div>
 
@@ -649,7 +651,6 @@
             updateStatus(`theme: ${theme} mode`);
         }
 
-        // Load saved theme
         const savedTheme = localStorage.getItem('theme');
         if (savedTheme === 'light') {
             setTheme('light');
@@ -668,7 +669,7 @@
             smoothness = 0.15;
             document.getElementById('smoothValue').textContent = '0.15';
             
-            updateStatus("basic settings reset to default");
+            updateStatus("basic settings reset");
             
             const btn = event.target;
             btn.style.transform = 'scale(0.95)';
@@ -689,7 +690,7 @@
             document.getElementById('flipMode').value = 'flip';
             flipHorizontal = true;
             
-            updateStatus("advanced settings reset to default");
+            updateStatus("advanced settings reset");
             
             if (oldCameraMode !== 'user') {
                 if (webcam.srcObject) {
@@ -811,7 +812,6 @@
         
         // ==================== RESET BACKGROUND ====================
         function resetBackground() {
-            // Minimalist gradient background
             const gradient = bgCtx.createLinearGradient(0, 0, WIDTH, HEIGHT);
             gradient.addColorStop(0, '#2a2a2a');
             gradient.addColorStop(0.5, '#1a1a1a');
@@ -821,12 +821,12 @@
             bgCtx.fillRect(0, 0, WIDTH, HEIGHT);
             
             bgCtx.fillStyle = '#ffffff';
-            bgCtx.font = '300 36px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
+            bgCtx.font = '300 32px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
             bgCtx.textAlign = 'center';
-            bgCtx.fillText('minimalist background', WIDTH/2, HEIGHT/2);
-            bgCtx.font = '300 24px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
+            bgCtx.fillText('background', WIDTH/2, HEIGHT/2);
+            bgCtx.font = '300 20px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
             bgCtx.fillStyle = '#808080';
-            bgCtx.fillText('upload custom image', WIDTH/2, HEIGHT/2 + 60);
+            bgCtx.fillText('upload image', WIDTH/2, HEIGHT/2 + 50);
             
             backgroundImage = null;
             updateStatus("background reset");
