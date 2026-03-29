@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Green Screen Mobile 2K - Studio Virtual</title>
+    <title>Green Screen Studio Pro - Mobile Portrait Support</title>
     <style>
         * {
             margin: 0;
@@ -12,12 +12,53 @@
             -webkit-tap-highlight-color: transparent;
         }
 
+        /* CSS Variables untuk Light/Dark Mode */
+        :root {
+            --bg-gradient-start: #667eea;
+            --bg-gradient-end: #764ba2;
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.8);
+            --card-bg: rgba(0, 0, 0, 0.3);
+            --accent-color: #ffd700;
+            --accent-secondary: #4facfe;
+            --button-primary: linear-gradient(135deg, #ffd700, #ffa500);
+            --button-secondary: linear-gradient(135deg, #4facfe, #00f2fe);
+            --status-bg: rgba(0, 0, 0, 0.5);
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        body.light-mode {
+            --bg-gradient-start: #f5f7fa;
+            --bg-gradient-end: #c3cfe2;
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(0, 0, 0, 0.1);
+            --text-primary: #2c3e50;
+            --text-secondary: #34495e;
+            --card-bg: rgba(255, 255, 255, 0.5);
+            --accent-color: #e67e22;
+            --accent-secondary: #3498db;
+            --status-bg: rgba(255, 255, 255, 0.8);
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+        }
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background: linear-gradient(135deg, #141e30 0%, #2c3e50 100%);
+            background: linear-gradient(135deg, var(--bg-gradient-start), var(--bg-gradient-end));
             min-height: 100vh;
-            padding: 10px;
-            padding-bottom: 70px; /* Space for mobile controls */
+            padding: 12px;
+            transition: all 0.3s ease;
+            color: var(--text-primary);
+        }
+
+        /* Glassmorphism Effect */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--shadow);
         }
 
         .container {
@@ -25,49 +66,130 @@
             margin: 0 auto;
         }
 
-        h1 {
-            text-align: center;
-            color: white;
-            margin-bottom: 15px;
-            font-size: clamp(1.5rem, 5vw, 2.5rem);
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        /* Header dengan Theme Toggle */
+        .header {
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            justify-content: center;
+            margin-bottom: 15px;
             flex-wrap: wrap;
             gap: 10px;
         }
 
-        /* Layout Responsif untuk Mobile */
-        .main-layout {
+        h1 {
+            font-size: clamp(1.2rem, 5vw, 1.8rem);
             display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin-bottom: 15px;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
         }
 
-        /* Panel Hasil (Fokus Utama) - Tampil Paling Atas di Mobile */
-        .result-panel {
-            background: rgba(0, 0, 0, 0.7);
+        .theme-toggle {
+            display: flex;
+            gap: 8px;
+            background: var(--glass-bg);
             backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            border-radius: 50px;
+            padding: 5px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .theme-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 40px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: bold;
+            transition: all 0.3s;
+            background: transparent;
+            color: var(--text-primary);
+        }
+
+        .theme-btn.active {
+            background: var(--accent-color);
+            color: #000;
+        }
+
+        .resolution-badge {
+            display: inline-block;
+            background: var(--accent-color);
+            color: #000;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+
+        /* Layout Utama - Support Portrait & Landscape */
+        .main-layout {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        /* Portrait Mode Layout */
+        @media (orientation: portrait) {
+            .main-layout {
+                flex-direction: column;
+            }
+            
+            .result-panel {
+                width: 100%;
+            }
+            
+            .source-grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+        }
+
+        /* Landscape Mode Layout */
+        @media (orientation: landscape) and (min-width: 768px) {
+            .main-layout {
+                flex-direction: row;
+            }
+            
+            .result-panel {
+                flex: 1.5;
+            }
+            
+            .source-grid {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                gap: 12px;
+            }
+        }
+
+        /* Portrait dengan lebar kecil */
+        @media (orientation: portrait) and (max-width: 480px) {
+            .source-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+        }
+
+        /* Panel Hasil */
+        .result-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
             border-radius: 20px;
             padding: 15px;
-            color: white;
-            border: 3px solid #ffd700;
-            box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
-            order: 1;
+            border: 2px solid var(--accent-color);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
         }
 
         .result-panel h2 {
             text-align: center;
             margin-bottom: 10px;
-            color: #ffd700;
-            font-size: clamp(1.2rem, 4vw, 2rem);
+            color: var(--accent-color);
+            font-size: clamp(1rem, 4vw, 1.5rem);
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 8px;
             flex-wrap: wrap;
         }
 
@@ -76,7 +198,7 @@
             border-radius: 15px;
             overflow: hidden;
             aspect-ratio: 16/9;
-            border: 2px solid #ffd700;
+            border: 2px solid var(--accent-color);
             width: 100%;
         }
 
@@ -88,28 +210,19 @@
             background: #1a1a1a;
         }
 
-        /* Panel Sumber dan Background - Grid 2 Kolom di Mobile */
-        .source-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            order: 2;
-        }
-
+        /* Source Panels */
         .source-panel, .background-panel {
-            background: rgba(0, 0, 0, 0.5);
+            background: var(--glass-bg);
             backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
             border-radius: 15px;
-            padding: 10px;
-            color: white;
-            border: 1px solid #4facfe;
+            padding: 12px;
+            border: 1px solid var(--glass-border);
         }
 
         .source-panel h3, .background-panel h3 {
             margin-bottom: 8px;
-            color: #4facfe;
-            font-size: clamp(0.9rem, 3vw, 1.2rem);
+            color: var(--accent-secondary);
+            font-size: clamp(0.85rem, 3vw, 1rem);
             display: flex;
             align-items: center;
             gap: 5px;
@@ -120,7 +233,6 @@
             border-radius: 10px;
             overflow: hidden;
             aspect-ratio: 16/9;
-            border: 1px solid #4facfe;
             width: 100%;
         }
 
@@ -130,49 +242,52 @@
             object-fit: cover;
         }
 
-        /* Panel Kontrol Mobile - Fixed Bottom */
-        .controls-panel {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: rgba(20, 30, 40, 0.95);
+        /* Status Bar */
+        .status-bar {
+            background: var(--status-bg);
             backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border-top-left-radius: 25px;
-            border-top-right-radius: 25px;
+            border-radius: 12px;
+            padding: 12px;
+            text-align: center;
+            font-size: 0.85rem;
+            margin: 12px 0;
+            border-left: 4px solid var(--accent-color);
+            color: var(--text-primary);
+        }
+
+        /* Kontrol Panel - Glassmorphism */
+        .controls-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
             padding: 15px;
-            color: white;
-            z-index: 1000;
-            box-shadow: 0 -5px 20px rgba(0,0,0,0.5);
-            border-top: 2px solid #4facfe;
-            max-height: 40vh;
-            overflow-y: auto;
+            margin-top: 12px;
+            border: 1px solid var(--glass-border);
         }
 
         .control-tabs {
             display: flex;
-            gap: 5px;
+            gap: 8px;
             margin-bottom: 15px;
+            flex-wrap: wrap;
         }
 
         .tab-btn {
             flex: 1;
-            padding: 12px 5px;
-            background: rgba(255,255,255,0.1);
+            padding: 12px 8px;
+            background: rgba(255, 255, 255, 0.1);
             border: none;
-            color: white;
-            border-radius: 10px;
-            font-size: clamp(0.8rem, 3vw, 1rem);
+            color: var(--text-primary);
+            border-radius: 12px;
+            font-size: clamp(0.8rem, 3vw, 0.9rem);
             cursor: pointer;
             transition: all 0.3s;
-            -webkit-touch-callout: none;
+            font-weight: 500;
         }
 
         .tab-btn.active {
-            background: #4facfe;
-            color: white;
-            font-weight: bold;
+            background: var(--accent-color);
+            color: #000;
         }
 
         .tab-content {
@@ -189,55 +304,54 @@
 
         .control-item label {
             display: block;
-            margin-bottom: 5px;
-            color: #4facfe;
+            margin-bottom: 8px;
+            color: var(--accent-secondary);
             font-weight: bold;
             font-size: 0.9rem;
         }
 
         .control-item input[type="range"] {
             width: 100%;
-            height: 40px;
-            border-radius: 20px;
-            background: linear-gradient(90deg, #4facfe, #ffd700);
+            height: 6px;
+            border-radius: 10px;
+            background: linear-gradient(90deg, var(--accent-secondary), var(--accent-color));
             -webkit-appearance: none;
-            appearance: none;
         }
 
         .control-item input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
-            appearance: none;
-            width: 30px;
-            height: 30px;
+            width: 28px;
+            height: 28px;
             background: white;
             border-radius: 50%;
             cursor: pointer;
-            border: 2px solid #4facfe;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            border: 2px solid var(--accent-color);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
         }
 
         .control-item input[type="color"] {
             width: 100%;
             height: 50px;
             border: none;
-            border-radius: 10px;
+            border-radius: 12px;
             cursor: pointer;
-            background: transparent;
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
         }
 
-        .control-item input[type="file"] {
+        .control-item select {
             width: 100%;
-            padding: 15px;
-            background: rgba(255,255,255,0.1);
-            border: 1px solid #4facfe;
-            border-radius: 10px;
-            color: white;
+            padding: 12px;
+            border-radius: 12px;
+            background: var(--card-bg);
+            color: var(--text-primary);
+            border: 1px solid var(--glass-border);
             font-size: 0.9rem;
         }
 
         .value-display {
             float: right;
-            color: #ffd700;
+            color: var(--accent-color);
             font-weight: bold;
         }
 
@@ -249,154 +363,95 @@
         }
 
         button {
-            padding: 15px;
+            padding: 14px;
             border: none;
             border-radius: 12px;
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s;
-            -webkit-touch-callout: none;
-            -webkit-appearance: none;
         }
 
         .btn-capture {
-            background: linear-gradient(135deg, #ffd700, #ffa500);
+            background: var(--button-primary);
             color: #000;
-        }
-
-        .btn-capture:active {
-            transform: scale(0.95);
         }
 
         .btn-reset {
-            background: linear-gradient(135deg, #4facfe, #00f2fe);
-            color: white;
+            background: var(--button-secondary);
+            color: #fff;
         }
 
-        .btn-reset:active {
-            transform: scale(0.95);
-        }
-
-        .status-bar {
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            color: white;
-            padding: 12px;
-            border-radius: 10px;
-            text-align: center;
-            font-size: 0.9rem;
-            margin: 10px 0;
-            border-left: 5px solid #4facfe;
-            word-break: break-word;
-        }
-
-        .resolution-badge {
-            display: inline-block;
-            background: #ffd700;
-            color: #000;
-            padding: 3px 10px;
-            border-radius: 20px;
-            font-size: 0.7rem;
-            font-weight: bold;
-            margin-left: 5px;
+        button:active {
+            transform: scale(0.97);
         }
 
         .info-text {
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 0.8rem;
+            color: var(--text-secondary);
+            font-size: 0.75rem;
             margin-top: 5px;
         }
 
-        /* Orientation warning */
-        .orientation-warning {
+        /* Orientation Guide */
+        .orientation-guide {
             display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.9);
-            z-index: 2000;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            color: white;
-            padding: 20px;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            z-index: 1000;
+            pointer-events: none;
+            white-space: nowrap;
+            border: 1px solid var(--glass-border);
         }
 
         @media (orientation: portrait) {
-            .orientation-warning {
+            .orientation-guide {
                 display: flex;
-            }
-        }
-
-        /* Landscape optimizations */
-        @media (min-width: 768px) and (orientation: landscape) {
-            body {
-                padding-bottom: 0;
-            }
-
-            .main-layout {
-                flex-direction: row;
-            }
-
-            .result-panel {
-                flex: 1.5;
-            }
-
-            .source-grid {
-                flex: 1;
-                display: flex;
-                flex-direction: column;
-            }
-
-            .controls-panel {
-                position: static;
-                border-radius: 15px;
-                margin-top: 15px;
-                max-height: none;
+                align-items: center;
+                gap: 8px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Orientation Warning -->
-    <div class="orientation-warning" id="orientationWarning">
-        <div>
-            <h2>📱 Putar Smartphone Anda</h2>
-            <p style="font-size: 1.2rem; margin: 20px;">Gunakan mode landscape untuk pengalaman terbaik</p>
-            <p>Atau lanjutkan dengan mode portrait (tampilan akan menyesuaikan)</p>
-            <button onclick="document.getElementById('orientationWarning').style.display='none'" 
-                    style="padding: 15px 30px; background: #4facfe; color: white; border: none; border-radius: 10px; margin-top: 20px;">
-                Lanjutkan
-            </button>
-        </div>
-    </div>
-
     <div class="container">
-        <h1>
-            <span>🎬 Green Screen</span>
-            <span class="resolution-badge">Mobile 2K</span>
-        </h1>
-        
+        <!-- Header dengan Theme Toggle -->
+        <div class="header">
+            <h1>
+                🎬 Green Screen Studio
+                <span class="resolution-badge">Pro Mobile</span>
+            </h1>
+            <div class="theme-toggle">
+                <button class="theme-btn active" onclick="setTheme('dark')">🌙 Dark</button>
+                <button class="theme-btn" onclick="setTheme('light')">☀️ Light</button>
+            </div>
+        </div>
+
         <!-- Layout Utama -->
         <div class="main-layout">
             <!-- Panel Hasil (Fokus Utama) -->
-            <div class="result-panel">
+            <div class="result-panel glass-card">
                 <h2>
-                    <span>✨ HASIL</span>
+                    <span>✨ HASIL GREEN SCREEN</span>
                     <span class="resolution-badge">2K</span>
                 </h2>
                 <div class="result-container">
                     <canvas id="resultCanvas" width="2560" height="1440"></canvas>
                 </div>
+                <div class="info-text" style="text-align: center; margin-top: 8px;">
+                    Hasil penggabungan real-time
+                </div>
             </div>
             
             <!-- Grid Sumber dan Background -->
             <div class="source-grid">
-                <div class="source-panel">
+                <div class="source-panel glass-card">
                     <h3>
                         <span>📹 Webcam</span>
                     </h3>
@@ -405,7 +460,7 @@
                     </div>
                 </div>
                 
-                <div class="background-panel">
+                <div class="background-panel glass-card">
                     <h3>
                         <span>🖼️ Background</span>
                     </h3>
@@ -421,8 +476,8 @@
             Status: Inisialisasi...
         </div>
 
-        <!-- Panel Kontrol Mobile -->
-        <div class="controls-panel">
+        <!-- Panel Kontrol Glassmorphism -->
+        <div class="controls-panel glass-card">
             <div class="control-tabs">
                 <button class="tab-btn active" onclick="switchTab('basic')">🎨 Dasar</button>
                 <button class="tab-btn" onclick="switchTab('advanced')">⚙️ Lanjutan</button>
@@ -439,39 +494,49 @@
                 <div class="control-item">
                     <label>🔍 Toleransi <span class="value-display" id="toleranceValue">0.35</span></label>
                     <input type="range" id="tolerance" min="0" max="0.8" step="0.01" value="0.35">
+                    <div class="info-text">Atur sensitivitas deteksi warna hijau</div>
                 </div>
                 
                 <div class="control-item">
                     <label>✨ Smooth Edge <span class="value-display" id="smoothValue">0.15</span></label>
                     <input type="range" id="smoothness" min="0" max="0.3" step="0.01" value="0.15">
+                    <div class="info-text">Menghaluskan tepi objek</div>
                 </div>
             </div>
 
             <!-- Tab Advanced -->
             <div id="tab-advanced" class="tab-content">
                 <div class="control-item">
-                    <label>📊 Kualitas (untuk performa)</label>
-                    <select id="qualityMode" style="width:100%; padding:15px; border-radius:10px; background:rgba(255,255,255,0.1); color:white; border:1px solid #4facfe;">
-                        <option value="high" style="background:#333;">Tinggi (2K - lambat)</option>
-                        <option value="medium" selected style="background:#333;">Sedang (HD - recommended)</option>
-                        <option value="low" style="background:#333;">Rendah (Cepat untuk HP lama)</option>
+                    <label>📊 Kualitas Proses</label>
+                    <select id="qualityMode">
+                        <option value="high">Tinggi (2K - Device high-end)</option>
+                        <option value="medium" selected>Sedang (HD - Recommended)</option>
+                        <option value="low">Rendah (Cepat - HP entry)</option>
                     </select>
                 </div>
                 
                 <div class="control-item">
-                    <label>🔄 Frame Rate</label>
-                    <select id="fpsLimit" style="width:100%; padding:15px; border-radius:10px; background:rgba(255,255,255,0.1); color:white; border:1px solid #4facfe;">
-                        <option value="30" style="background:#333;">30 FPS (Halus)</option>
-                        <option value="15" selected style="background:#333;">15 FPS (Recommended)</option>
-                        <option value="10" style="background:#333;">10 FPS (Hemat baterai)</option>
+                    <label>⚡ Frame Rate</label>
+                    <select id="fpsLimit">
+                        <option value="30">30 FPS (Halus)</option>
+                        <option value="15" selected>15 FPS (Balance)</option>
+                        <option value="10">10 FPS (Hemat baterai)</option>
                     </select>
                 </div>
                 
                 <div class="control-item">
                     <label>📱 Mode Kamera</label>
-                    <select id="cameraMode" style="width:100%; padding:15px; border-radius:10px; background:rgba(255,255,255,0.1); color:white; border:1px solid #4facfe;">
-                        <option value="user" selected style="background:#333;">Kamera Depan</option>
-                        <option value="environment" style="background:#333;">Kamera Belakang</option>
+                    <select id="cameraMode">
+                        <option value="user" selected>Kamera Depan</option>
+                        <option value="environment">Kamera Belakang</option>
+                    </select>
+                </div>
+                
+                <div class="control-item">
+                    <label>🔄 Flip Horizontal</label>
+                    <select id="flipMode">
+                        <option value="normal" selected>Normal</option>
+                        <option value="flip">Mirror (Flip)</option>
                     </select>
                 </div>
             </div>
@@ -481,27 +546,51 @@
                 <div class="control-item">
                     <label>📁 Upload Gambar</label>
                     <input type="file" id="bgUpload" accept="image/*">
+                    <div class="info-text">Format JPG, PNG, GIF (akan discale ke 2K)</div>
                 </div>
                 
                 <div class="button-group">
-                    <button class="btn-reset" onclick="resetBackground()">🔄 Reset</button>
-                    <button class="btn-capture" onclick="captureResult()">📸 Capture</button>
+                    <button class="btn-reset" onclick="resetBackground()">🔄 Reset Default</button>
+                    <button class="btn-capture" onclick="captureResult()">📸 Capture 2K</button>
                 </div>
             </div>
+        </div>
+
+        <!-- Orientation Guide -->
+        <div class="orientation-guide">
+            <span>🔄</span> Putar ke landscape untuk tampilan optimal
         </div>
     </div>
 
     <script>
+        // ==================== THEME MANAGEMENT ====================
+        function setTheme(theme) {
+            if (theme === 'dark') {
+                document.body.classList.remove('light-mode');
+                document.querySelectorAll('.theme-btn').forEach(btn => btn.classList.remove('active'));
+                document.querySelector('.theme-btn:first-child').classList.add('active');
+            } else {
+                document.body.classList.add('light-mode');
+                document.querySelectorAll('.theme-btn').forEach(btn => btn.classList.remove('active'));
+                document.querySelector('.theme-btn:last-child').classList.add('active');
+            }
+            localStorage.setItem('theme', theme);
+        }
+
+        // Load saved theme
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'light') {
+            setTheme('light');
+        }
+
         // ==================== DETEKSI MOBILE ====================
         const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
         const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
         
         // ==================== KONFIGURASI ====================
-        // Resolusi 2K
         const WIDTH = 2560;
         const HEIGHT = 1440;
         
-        // Resolusi untuk performa mobile (akan di-scale)
         let PROCESS_WIDTH = isMobile ? 1280 : 2560;
         let PROCESS_HEIGHT = isMobile ? 720 : 1440;
         
@@ -513,7 +602,6 @@
         const bgCtx = bgCanvas.getContext('2d');
         const resultCtx = resultCanvas.getContext('2d');
         
-        // Set ukuran canvas
         bgCanvas.width = WIDTH;
         bgCanvas.height = HEIGHT;
         resultCanvas.width = WIDTH;
@@ -527,40 +615,49 @@
         let isWebcamReady = false;
         let animationFrame = null;
         let lastProcessTime = 0;
-        let fpsInterval = 1000 / 15; // Default 15 FPS
+        let fpsInterval = 1000 / 15;
+        let flipHorizontal = false;
         
         // ==================== FUNGSI ====================
         function updateStatus(message) {
-            document.getElementById('status').textContent = `Status: ${message}`;
+            const statusEl = document.getElementById('status');
+            statusEl.textContent = `Status: ${message}`;
         }
         
-        function switchTab(tabName) {
-            // Update tabs
+        function switchTab(tabName, event) {
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
             document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
             
-            event.target.classList.add('active');
+            if (event && event.target) {
+                event.target.classList.add('active');
+            } else {
+                const btns = document.querySelectorAll('.tab-btn');
+                if (tabName === 'basic') btns[0].classList.add('active');
+                else if (tabName === 'advanced') btns[1].classList.add('active');
+                else btns[2].classList.add('active');
+            }
+            
             document.getElementById(`tab-${tabName}`).classList.add('active');
         }
         
-        // ==================== INISIALISASI WEBCAM MOBILE ====================
+        // ==================== INISIALISASI WEBCAM ====================
         async function initWebcam() {
             try {
                 updateStatus("Mengakses kamera...");
                 
                 const cameraMode = document.getElementById('cameraMode').value;
+                const flipMode = document.getElementById('flipMode').value;
+                flipHorizontal = flipMode === 'flip';
                 
-                // Optimasi untuk mobile
                 const constraints = {
                     video: {
                         facingMode: cameraMode,
-                        width: { ideal: isMobile ? 1280 : 2560 },
-                        height: { ideal: isMobile ? 720 : 1440 },
+                        width: { ideal: isMobile ? 1280 : 1920 },
+                        height: { ideal: isMobile ? 720 : 1080 },
                         frameRate: { ideal: 30 }
                     }
                 };
                 
-                // Tambahan untuk iOS
                 if (isIOS) {
                     constraints.video.width.ideal = 1280;
                     constraints.video.height.ideal = 720;
@@ -573,27 +670,18 @@
                     webcam.play()
                         .then(() => {
                             isWebcamReady = true;
-                            updateStatus("✅ Kamera siap - Memproses...");
+                            updateStatus("✅ Kamera siap - Portrait & Landscape supported");
                         })
-                        .catch(e => {
-                            updateStatus("Error play: " + e.message);
-                        });
-                };
-                
-                webcam.onerror = (err) => {
-                    updateStatus("❌ Error kamera");
+                        .catch(e => updateStatus("Error: " + e.message));
                 };
                 
             } catch (err) {
                 updateStatus("❌ Gagal akses kamera: " + err.message);
-                
-                // Fallback ke resolusi rendah
                 try {
-                    const stream = await navigator.mediaDevices.getUserMedia({ 
-                        video: { width: 640, height: 480 } 
-                    });
+                    const stream = await navigator.mediaDevices.getUserMedia({ video: true });
                     webcam.srcObject = stream;
-                    updateStatus("⚠️ Mode kompatibilitas (640x480)");
+                    updateStatus("⚠️ Mode kompatibilitas aktif");
+                    isWebcamReady = true;
                 } catch (e) {
                     updateStatus("❌ Tidak bisa akses kamera");
                 }
@@ -603,9 +691,9 @@
         // ==================== RESET BACKGROUND ====================
         function resetBackground() {
             const gradient = bgCtx.createLinearGradient(0, 0, WIDTH, HEIGHT);
-            gradient.addColorStop(0, '#1a2a6c');
-            gradient.addColorStop(0.5, '#b21f1f');
-            gradient.addColorStop(1, '#fdbb2d');
+            gradient.addColorStop(0, '#667eea');
+            gradient.addColorStop(0.5, '#764ba2');
+            gradient.addColorStop(1, '#f093fb');
             
             bgCtx.fillStyle = gradient;
             bgCtx.fillRect(0, 0, WIDTH, HEIGHT);
@@ -613,10 +701,13 @@
             bgCtx.fillStyle = 'white';
             bgCtx.font = 'bold 48px Arial';
             bgCtx.textAlign = 'center';
-            bgCtx.fillText('Background 2K', WIDTH/2, HEIGHT/2);
+            bgCtx.fillText('✨ Background 2K', WIDTH/2, HEIGHT/2);
+            bgCtx.font = '36px Arial';
+            bgCtx.fillStyle = 'rgba(255,255,255,0.8)';
+            bgCtx.fillText('Upload gambar untuk custom', WIDTH/2, HEIGHT/2 + 80);
             
             backgroundImage = null;
-            updateStatus("Background direset");
+            updateStatus("Background direset ke default");
         }
         
         // ==================== EVENT LISTENERS ====================
@@ -642,8 +733,8 @@
         document.getElementById('qualityMode').addEventListener('change', (e) => {
             const quality = e.target.value;
             if (quality === 'high') {
-                PROCESS_WIDTH = 2560;
-                PROCESS_HEIGHT = 1440;
+                PROCESS_WIDTH = 1920;
+                PROCESS_HEIGHT = 1080;
             } else if (quality === 'medium') {
                 PROCESS_WIDTH = 1280;
                 PROCESS_HEIGHT = 720;
@@ -657,16 +748,18 @@
         document.getElementById('fpsLimit').addEventListener('change', (e) => {
             const fps = parseInt(e.target.value);
             fpsInterval = 1000 / fps;
-            updateStatus(`FPS: ${fps}`);
         });
         
         document.getElementById('cameraMode').addEventListener('change', () => {
-            // Stop current stream
             if (webcam.srcObject) {
                 webcam.srcObject.getTracks().forEach(track => track.stop());
             }
             isWebcamReady = false;
             initWebcam();
+        });
+        
+        document.getElementById('flipMode').addEventListener('change', (e) => {
+            flipHorizontal = e.target.value === 'flip';
         });
         
         document.getElementById('bgUpload').addEventListener('change', (e) => {
@@ -695,19 +788,23 @@
                 if (now - lastProcessTime < fpsInterval) return true;
                 lastProcessTime = now;
                 
-                // Buat canvas sementara dengan resolusi proses
                 const tempCanvas = document.createElement('canvas');
                 tempCanvas.width = PROCESS_WIDTH;
                 tempCanvas.height = PROCESS_HEIGHT;
                 const tempCtx = tempCanvas.getContext('2d');
                 
-                // Gambar frame webcam
-                tempCtx.drawImage(webcam, 0, 0, PROCESS_WIDTH, PROCESS_HEIGHT);
+                // Apply flip jika diperlukan
+                if (flipHorizontal) {
+                    tempCtx.save();
+                    tempCtx.scale(-1, 1);
+                    tempCtx.drawImage(webcam, -PROCESS_WIDTH, 0, PROCESS_WIDTH, PROCESS_HEIGHT);
+                    tempCtx.restore();
+                } else {
+                    tempCtx.drawImage(webcam, 0, 0, PROCESS_WIDTH, PROCESS_HEIGHT);
+                }
                 
-                // Ambil pixel data
                 const webcamData = tempCtx.getImageData(0, 0, PROCESS_WIDTH, PROCESS_HEIGHT);
                 
-                // Buat background dengan resolusi proses
                 const bgTempCanvas = document.createElement('canvas');
                 bgTempCanvas.width = PROCESS_WIDTH;
                 bgTempCanvas.height = PROCESS_HEIGHT;
@@ -715,14 +812,12 @@
                 bgTempCtx.drawImage(bgCanvas, 0, 0, PROCESS_WIDTH, PROCESS_HEIGHT);
                 const bgData = bgTempCtx.getImageData(0, 0, PROCESS_WIDTH, PROCESS_HEIGHT);
                 
-                // Buat result sementara
                 const resultTempData = tempCtx.createImageData(PROCESS_WIDTH, PROCESS_HEIGHT);
                 
                 const webcamPixels = webcamData.data;
                 const bgPixels = bgData.data;
                 const resultPixels = resultTempData.data;
                 
-                // Proses setiap pixel
                 for (let i = 0; i < webcamPixels.length; i += 4) {
                     const r = webcamPixels[i];
                     const g = webcamPixels[i + 1];
@@ -760,13 +855,11 @@
                     resultPixels[i + 3] = 255;
                 }
                 
-                // Scale hasil ke ukuran 2K
                 const resultTempCanvas = document.createElement('canvas');
                 resultTempCanvas.width = PROCESS_WIDTH;
                 resultTempCanvas.height = PROCESS_HEIGHT;
                 resultTempCanvas.getContext('2d').putImageData(resultTempData, 0, 0);
                 
-                // Gambar ke result canvas utama (scale up)
                 resultCtx.drawImage(resultTempCanvas, 0, 0, WIDTH, HEIGHT);
                 
                 return true;
@@ -796,25 +889,24 @@
                     link.href = url;
                     link.click();
                     URL.revokeObjectURL(url);
+                    updateStatus("✅ Gambar 2K berhasil dicapture!");
                     
                     if (isMobile) {
-                        alert('✅ Gambar tersimpan! Cek folder download Anda.');
+                        setTimeout(() => {
+                            alert('✨ Gambar tersimpan!\nCek folder download Anda.');
+                        }, 100);
                     }
-                    
-                    updateStatus("✅ Gambar dicapture!");
-                }, 'image/png', 0.9);
+                }, 'image/png', 0.95);
                 
             } catch (error) {
                 updateStatus("❌ Gagal capture");
-                if (isMobile) {
-                    alert('Gagal menyimpan gambar');
-                }
             }
         };
         
         // ==================== EXPOSE FUNCTIONS ====================
         window.resetBackground = resetBackground;
         window.switchTab = switchTab;
+        window.setTheme = setTheme;
         
         // ==================== START ====================
         resetBackground();
@@ -834,7 +926,6 @@
         // Handle orientation change
         window.addEventListener('orientationchange', () => {
             setTimeout(() => {
-                // Refresh layout
                 window.dispatchEvent(new Event('resize'));
             }, 100);
         });
