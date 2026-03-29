@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Green Screen Studio Pro - Mobile Portrait Support</title>
+    <title>Green Screen Studio - Minimalist Theme</title>
     <style>
         * {
             margin: 0;
@@ -12,76 +12,105 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* CSS Variables untuk Light/Dark Mode */
+        /* CSS Variables - Minimalist Theme */
         :root {
-            --bg-gradient-start: #667eea;
-            --bg-gradient-end: #764ba2;
-            --glass-bg: rgba(255, 255, 255, 0.1);
-            --glass-border: rgba(255, 255, 255, 0.2);
+            /* Dark Mode - Black Grey & White */
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #111111;
+            --bg-tertiary: #1a1a1a;
+            --glass-bg: rgba(10, 10, 10, 0.75);
+            --glass-border: rgba(255, 255, 255, 0.15);
             --text-primary: #ffffff;
-            --text-secondary: rgba(255, 255, 255, 0.8);
-            --card-bg: rgba(0, 0, 0, 0.3);
-            --accent-color: #ffd700;
-            --accent-secondary: #4facfe;
-            --button-primary: linear-gradient(135deg, #ffd700, #ffa500);
-            --button-secondary: linear-gradient(135deg, #4facfe, #00f2fe);
-            --status-bg: rgba(0, 0, 0, 0.5);
-            --shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            --text-secondary: #b0b0b0;
+            --text-tertiary: #808080;
+            --accent-color: #ffffff;
+            --accent-secondary: #e0e0e0;
+            --card-bg: rgba(20, 20, 20, 0.6);
+            --button-primary: #2a2a2a;
+            --button-primary-hover: #3a3a3a;
+            --button-secondary: #1f1f1f;
+            --button-secondary-hover: #2f2f2f;
+            --status-bg: rgba(0, 0, 0, 0.6);
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            --border-glow: 0 0 0 1px rgba(255, 255, 255, 0.1);
+            --input-bg: rgba(30, 30, 30, 0.8);
+            --slider-track: #2a2a2a;
+            --slider-thumb: #ffffff;
         }
 
         body.light-mode {
-            --bg-gradient-start: #f5f7fa;
-            --bg-gradient-end: #c3cfe2;
-            --glass-bg: rgba(255, 255, 255, 0.7);
+            /* Light Mode - White Grey & Black */
+            --bg-primary: #f8f9fa;
+            --bg-secondary: #ffffff;
+            --bg-tertiary: #f0f0f0;
+            --glass-bg: rgba(255, 255, 255, 0.85);
             --glass-border: rgba(0, 0, 0, 0.1);
-            --text-primary: #2c3e50;
-            --text-secondary: #34495e;
-            --card-bg: rgba(255, 255, 255, 0.5);
-            --accent-color: #e67e22;
-            --accent-secondary: #3498db;
+            --text-primary: #1a1a1a;
+            --text-secondary: #4a4a4a;
+            --text-tertiary: #6c6c6c;
+            --accent-color: #1a1a1a;
+            --accent-secondary: #2a2a2a;
+            --card-bg: rgba(255, 255, 255, 0.7);
+            --button-primary: #e5e5e5;
+            --button-primary-hover: #d5d5d5;
+            --button-secondary: #f0f0f0;
+            --button-secondary-hover: #e0e0e0;
             --status-bg: rgba(255, 255, 255, 0.8);
-            --shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            --border-glow: 0 0 0 1px rgba(0, 0, 0, 0.05);
+            --input-bg: rgba(240, 240, 240, 0.9);
+            --slider-track: #e0e0e0;
+            --slider-thumb: #1a1a1a;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background: linear-gradient(135deg, var(--bg-gradient-start), var(--bg-gradient-end));
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+            background: var(--bg-primary);
             min-height: 100vh;
-            padding: 12px;
+            padding: 16px;
             transition: all 0.3s ease;
             color: var(--text-primary);
         }
 
-        /* Glassmorphism Effect */
+        /* Glassmorphism with Minimalist Aura */
         .glass-card {
             background: var(--glass-bg);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border);
             box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover {
+            border-color: var(--accent-secondary);
         }
 
         .container {
-            max-width: 100%;
+            max-width: 1400px;
             margin: 0 auto;
         }
 
-        /* Header dengan Theme Toggle */
+        /* Minimalist Header */
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--glass-border);
         }
 
         h1 {
-            font-size: clamp(1.2rem, 5vw, 1.8rem);
+            font-size: clamp(1.2rem, 5vw, 1.6rem);
+            font-weight: 500;
             display: flex;
             align-items: center;
             gap: 8px;
             flex-wrap: wrap;
+            letter-spacing: -0.5px;
         }
 
         .theme-toggle {
@@ -89,18 +118,18 @@
             gap: 8px;
             background: var(--glass-bg);
             backdrop-filter: blur(10px);
-            border-radius: 50px;
-            padding: 5px;
+            border-radius: 40px;
+            padding: 4px;
             border: 1px solid var(--glass-border);
         }
 
         .theme-btn {
-            padding: 10px 20px;
+            padding: 8px 20px;
             border: none;
-            border-radius: 40px;
+            border-radius: 36px;
             cursor: pointer;
-            font-size: 0.9rem;
-            font-weight: bold;
+            font-size: 0.85rem;
+            font-weight: 500;
             transition: all 0.3s;
             background: transparent;
             color: var(--text-primary);
@@ -108,53 +137,55 @@
 
         .theme-btn.active {
             background: var(--accent-color);
-            color: #000;
+            color: var(--bg-primary);
         }
 
         .resolution-badge {
             display: inline-block;
             background: var(--accent-color);
-            color: #000;
+            color: var(--bg-primary);
             padding: 3px 10px;
             border-radius: 20px;
-            font-size: 0.7rem;
-            font-weight: bold;
+            font-size: 0.65rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
         }
 
         /* Layout Utama - Support Portrait & Landscape */
         .main-layout {
             display: flex;
-            gap: 12px;
-            margin-bottom: 12px;
+            gap: 16px;
+            margin-bottom: 16px;
         }
 
-        /* Portrait Mode Layout */
         @media (orientation: portrait) {
             .main-layout {
                 flex-direction: column;
             }
-            
             .result-panel {
                 width: 100%;
             }
-            
             .source-grid {
                 display: grid;
                 grid-template-columns: 1fr 1fr;
-                gap: 10px;
+                gap: 12px;
             }
         }
 
-        /* Landscape Mode Layout */
+        @media (orientation: portrait) and (max-width: 480px) {
+            .source-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+        }
+
         @media (orientation: landscape) and (min-width: 768px) {
             .main-layout {
                 flex-direction: row;
             }
-            
             .result-panel {
                 flex: 1.5;
             }
-            
             .source-grid {
                 flex: 1;
                 display: flex;
@@ -163,42 +194,35 @@
             }
         }
 
-        /* Portrait dengan lebar kecil */
-        @media (orientation: portrait) and (max-width: 480px) {
-            .source-grid {
-                grid-template-columns: 1fr;
-                gap: 12px;
-            }
-        }
-
-        /* Panel Hasil */
+        /* Panel Hasil - Minimalist Focus */
         .result-panel {
             background: var(--glass-bg);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(20px);
             border-radius: 20px;
-            padding: 15px;
-            border: 2px solid var(--accent-color);
-            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+            padding: 16px;
+            border: 1px solid var(--glass-border);
         }
 
         .result-panel h2 {
             text-align: center;
-            margin-bottom: 10px;
-            color: var(--accent-color);
-            font-size: clamp(1rem, 4vw, 1.5rem);
+            margin-bottom: 12px;
+            font-size: clamp(0.9rem, 4vw, 1.2rem);
+            font-weight: 500;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
             flex-wrap: wrap;
+            letter-spacing: -0.3px;
+            color: var(--text-primary);
         }
 
         .result-container {
-            background: #000;
-            border-radius: 15px;
+            background: var(--bg-tertiary);
+            border-radius: 12px;
             overflow: hidden;
             aspect-ratio: 16/9;
-            border: 2px solid var(--accent-color);
+            border: 1px solid var(--glass-border);
             width: 100%;
         }
 
@@ -207,33 +231,36 @@
             height: 100%;
             display: block;
             object-fit: contain;
-            background: #1a1a1a;
+            background: var(--bg-secondary);
         }
 
-        /* Source Panels */
+        /* Source Panels - Minimalist */
         .source-panel, .background-panel {
             background: var(--glass-bg);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
+            backdrop-filter: blur(20px);
+            border-radius: 16px;
             padding: 12px;
             border: 1px solid var(--glass-border);
         }
 
         .source-panel h3, .background-panel h3 {
-            margin-bottom: 8px;
-            color: var(--accent-secondary);
-            font-size: clamp(0.85rem, 3vw, 1rem);
+            margin-bottom: 10px;
+            font-size: clamp(0.8rem, 3vw, 0.95rem);
+            font-weight: 500;
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 6px;
+            color: var(--text-secondary);
+            letter-spacing: -0.2px;
         }
 
         .webcam-container, .bg-container {
-            background: #1a1a1a;
+            background: var(--bg-tertiary);
             border-radius: 10px;
             overflow: hidden;
             aspect-ratio: 16/9;
             width: 100%;
+            border: 1px solid var(--glass-border);
         }
 
         .webcam-container video, .bg-container canvas {
@@ -242,25 +269,27 @@
             object-fit: cover;
         }
 
-        /* Status Bar */
+        /* Status Bar - Minimalist */
         .status-bar {
             background: var(--status-bg);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(12px);
             border-radius: 12px;
-            padding: 12px;
+            padding: 10px 16px;
             text-align: center;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             margin: 12px 0;
-            border-left: 4px solid var(--accent-color);
-            color: var(--text-primary);
+            border-left: 2px solid var(--accent-color);
+            color: var(--text-secondary);
+            font-weight: 400;
+            letter-spacing: -0.2px;
         }
 
-        /* Kontrol Panel - Glassmorphism */
+        /* Kontrol Panel - Minimalist Glass */
         .controls-panel {
             background: var(--glass-bg);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(20px);
             border-radius: 20px;
-            padding: 15px;
+            padding: 16px;
             margin-top: 12px;
             border: 1px solid var(--glass-border);
         }
@@ -268,18 +297,18 @@
         .control-tabs {
             display: flex;
             gap: 8px;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             flex-wrap: wrap;
         }
 
         .tab-btn {
             flex: 1;
-            padding: 12px 8px;
-            background: rgba(255, 255, 255, 0.1);
-            border: none;
-            color: var(--text-primary);
-            border-radius: 12px;
-            font-size: clamp(0.8rem, 3vw, 0.9rem);
+            padding: 10px 12px;
+            background: transparent;
+            border: 1px solid var(--glass-border);
+            color: var(--text-secondary);
+            border-radius: 40px;
+            font-size: clamp(0.75rem, 3vw, 0.85rem);
             cursor: pointer;
             transition: all 0.3s;
             font-weight: 500;
@@ -287,7 +316,8 @@
 
         .tab-btn.active {
             background: var(--accent-color);
-            color: #000;
+            color: var(--bg-primary);
+            border-color: var(--accent-color);
         }
 
         .tab-content {
@@ -299,171 +329,205 @@
         }
 
         .control-item {
-            margin-bottom: 15px;
+            margin-bottom: 18px;
         }
 
         .control-item label {
             display: block;
             margin-bottom: 8px;
-            color: var(--accent-secondary);
-            font-weight: bold;
-            font-size: 0.9rem;
+            color: var(--text-primary);
+            font-weight: 500;
+            font-size: 0.85rem;
+            letter-spacing: -0.2px;
         }
 
         .control-item input[type="range"] {
             width: 100%;
-            height: 6px;
-            border-radius: 10px;
-            background: linear-gradient(90deg, var(--accent-secondary), var(--accent-color));
+            height: 3px;
+            border-radius: 3px;
+            background: var(--slider-track);
             -webkit-appearance: none;
         }
 
         .control-item input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
-            width: 28px;
-            height: 28px;
-            background: white;
+            width: 20px;
+            height: 20px;
+            background: var(--slider-thumb);
             border-radius: 50%;
             cursor: pointer;
-            border: 2px solid var(--accent-color);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            border: none;
+            box-shadow: var(--shadow);
         }
 
         .control-item input[type="color"] {
             width: 100%;
-            height: 50px;
+            height: 44px;
             border: none;
-            border-radius: 12px;
+            border-radius: 10px;
             cursor: pointer;
-            background: var(--card-bg);
+            background: var(--input-bg);
             border: 1px solid var(--glass-border);
         }
 
         .control-item select {
             width: 100%;
             padding: 12px;
-            border-radius: 12px;
-            background: var(--card-bg);
+            border-radius: 10px;
+            background: var(--input-bg);
             color: var(--text-primary);
             border: 1px solid var(--glass-border);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
+            font-weight: 400;
         }
 
         .value-display {
             float: right;
-            color: var(--accent-color);
-            font-weight: bold;
+            color: var(--text-tertiary);
+            font-weight: 400;
+            font-size: 0.8rem;
         }
 
         .button-group {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-top: 15px;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .reset-default-btn {
+            background: var(--button-secondary);
+            color: var(--text-primary);
+            border: 1px solid var(--glass-border);
+        }
+
+        .reset-default-btn:hover {
+            background: var(--button-secondary-hover);
         }
 
         button {
-            padding: 14px;
+            padding: 12px;
             border: none;
-            border-radius: 12px;
-            font-size: 0.95rem;
-            font-weight: bold;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            font-weight: 500;
             cursor: pointer;
             transition: all 0.3s;
+            background: var(--button-primary);
+            color: var(--text-primary);
+            border: 1px solid var(--glass-border);
+        }
+
+        button:hover {
+            background: var(--button-primary-hover);
+            transform: translateY(-1px);
+        }
+
+        button:active {
+            transform: translateY(0);
         }
 
         .btn-capture {
-            background: var(--button-primary);
-            color: #000;
+            background: var(--accent-color);
+            color: var(--bg-primary);
+            border: none;
+        }
+
+        .btn-capture:hover {
+            opacity: 0.9;
         }
 
         .btn-reset {
             background: var(--button-secondary);
-            color: #fff;
-        }
-
-        button:active {
-            transform: scale(0.97);
+            color: var(--text-primary);
         }
 
         .info-text {
-            color: var(--text-secondary);
-            font-size: 0.75rem;
-            margin-top: 5px;
+            color: var(--text-tertiary);
+            font-size: 0.7rem;
+            margin-top: 6px;
+            font-weight: 400;
         }
 
-        /* Orientation Guide */
         .orientation-guide {
             display: none;
             position: fixed;
-            bottom: 80px;
+            bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
             background: var(--glass-bg);
-            backdrop-filter: blur(10px);
-            padding: 8px 16px;
+            backdrop-filter: blur(12px);
+            padding: 6px 14px;
             border-radius: 30px;
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             z-index: 1000;
             pointer-events: none;
             white-space: nowrap;
             border: 1px solid var(--glass-border);
+            color: var(--text-tertiary);
         }
 
         @media (orientation: portrait) {
             .orientation-guide {
                 display: flex;
                 align-items: center;
-                gap: 8px;
+                gap: 6px;
             }
+        }
+
+        /* Minimalist Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-tertiary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--text-tertiary);
+            border-radius: 3px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Header dengan Theme Toggle -->
+        <!-- Minimalist Header -->
         <div class="header">
             <h1>
-                🎬 Green Screen Studio
-                <span class="resolution-badge">Pro Mobile</span>
+                green screen studio
+                <span class="resolution-badge">2K</span>
             </h1>
             <div class="theme-toggle">
-                <button class="theme-btn active" onclick="setTheme('dark')">🌙 Dark</button>
-                <button class="theme-btn" onclick="setTheme('light')">☀️ Light</button>
+                <button class="theme-btn active" onclick="setTheme('dark')">dark</button>
+                <button class="theme-btn" onclick="setTheme('light')">light</button>
             </div>
         </div>
 
         <!-- Layout Utama -->
         <div class="main-layout">
-            <!-- Panel Hasil (Fokus Utama) -->
+            <!-- Panel Hasil Utama -->
             <div class="result-panel glass-card">
                 <h2>
-                    <span>✨ HASIL GREEN SCREEN</span>
+                    result
                     <span class="resolution-badge">2K</span>
                 </h2>
                 <div class="result-container">
                     <canvas id="resultCanvas" width="2560" height="1440"></canvas>
                 </div>
-                <div class="info-text" style="text-align: center; margin-top: 8px;">
-                    Hasil penggabungan real-time
-                </div>
             </div>
             
-            <!-- Grid Sumber dan Background -->
+            <!-- Grid Sumber -->
             <div class="source-grid">
                 <div class="source-panel glass-card">
-                    <h3>
-                        <span>📹 Webcam</span>
-                    </h3>
+                    <h3>webcam input</h3>
                     <div class="webcam-container">
                         <video id="webcam" autoplay playsinline muted></video>
                     </div>
                 </div>
                 
                 <div class="background-panel glass-card">
-                    <h3>
-                        <span>🖼️ Background</span>
-                    </h3>
+                    <h3>background</h3>
                     <div class="bg-container">
                         <canvas id="backgroundCanvas" width="2560" height="1440"></canvas>
                     </div>
@@ -473,92 +537,99 @@
 
         <!-- Status Bar -->
         <div class="status-bar" id="status">
-            Status: Inisialisasi...
+            ● system ready
         </div>
 
-        <!-- Panel Kontrol Glassmorphism -->
+        <!-- Kontrol Panel -->
         <div class="controls-panel glass-card">
             <div class="control-tabs">
-                <button class="tab-btn active" onclick="switchTab('basic')">🎨 Dasar</button>
-                <button class="tab-btn" onclick="switchTab('advanced')">⚙️ Lanjutan</button>
-                <button class="tab-btn" onclick="switchTab('background')">🖼️ Background</button>
+                <button class="tab-btn active" onclick="switchTab('basic')">basic</button>
+                <button class="tab-btn" onclick="switchTab('advanced')">advanced</button>
+                <button class="tab-btn" onclick="switchTab('background')">background</button>
             </div>
 
             <!-- Tab Basic -->
             <div id="tab-basic" class="tab-content active">
                 <div class="control-item">
-                    <label>🎨 Warna Green Screen</label>
+                    <label>key color</label>
                     <input type="color" id="keyColor" value="#00ff00">
                 </div>
                 
                 <div class="control-item">
-                    <label>🔍 Toleransi <span class="value-display" id="toleranceValue">0.35</span></label>
+                    <label>tolerance <span class="value-display" id="toleranceValue">0.35</span></label>
                     <input type="range" id="tolerance" min="0" max="0.8" step="0.01" value="0.35">
-                    <div class="info-text">Atur sensitivitas deteksi warna hijau</div>
                 </div>
                 
                 <div class="control-item">
-                    <label>✨ Smooth Edge <span class="value-display" id="smoothValue">0.15</span></label>
+                    <label>smooth edge <span class="value-display" id="smoothValue">0.15</span></label>
                     <input type="range" id="smoothness" min="0" max="0.3" step="0.01" value="0.15">
-                    <div class="info-text">Menghaluskan tepi objek</div>
                 </div>
+                
+                <div class="button-group">
+                    <button class="reset-default-btn" onclick="resetBasicDefaults()">reset default</button>
+                </div>
+                <div class="info-text">default: green | tolerance 0.35 | smooth 0.15</div>
             </div>
 
             <!-- Tab Advanced -->
             <div id="tab-advanced" class="tab-content">
                 <div class="control-item">
-                    <label>📊 Kualitas Proses</label>
+                    <label>quality</label>
                     <select id="qualityMode">
-                        <option value="high">Tinggi (2K - Device high-end)</option>
-                        <option value="medium" selected>Sedang (HD - Recommended)</option>
-                        <option value="low">Rendah (Cepat - HP entry)</option>
+                        <option value="high">high (2K)</option>
+                        <option value="medium" selected>medium (HD)</option>
+                        <option value="low">low (fast)</option>
                     </select>
                 </div>
                 
                 <div class="control-item">
-                    <label>⚡ Frame Rate</label>
+                    <label>frame rate</label>
                     <select id="fpsLimit">
-                        <option value="30">30 FPS (Halus)</option>
-                        <option value="15" selected>15 FPS (Balance)</option>
-                        <option value="10">10 FPS (Hemat baterai)</option>
+                        <option value="30">30 fps</option>
+                        <option value="15" selected>15 fps (balance)</option>
+                        <option value="10">10 fps</option>
                     </select>
                 </div>
                 
                 <div class="control-item">
-                    <label>📱 Mode Kamera</label>
+                    <label>camera</label>
                     <select id="cameraMode">
-                        <option value="user" selected>Kamera Depan</option>
-                        <option value="environment">Kamera Belakang</option>
+                        <option value="user" selected>front</option>
+                        <option value="environment">back</option>
                     </select>
                 </div>
                 
                 <div class="control-item">
-                    <label>🔄 Flip Horizontal</label>
+                    <label>flip</label>
                     <select id="flipMode">
-                        <option value="normal" selected>Normal</option>
-                        <option value="flip">Mirror (Flip)</option>
+                        <option value="flip" selected>mirror</option>
+                        <option value="normal">normal</option>
                     </select>
                 </div>
+                
+                <div class="button-group">
+                    <button class="reset-default-btn" onclick="resetAdvancedDefaults()">reset default</button>
+                </div>
+                <div class="info-text">default: medium | 15 fps | front | mirror</div>
             </div>
 
             <!-- Tab Background -->
             <div id="tab-background" class="tab-content">
                 <div class="control-item">
-                    <label>📁 Upload Gambar</label>
+                    <label>upload image</label>
                     <input type="file" id="bgUpload" accept="image/*">
-                    <div class="info-text">Format JPG, PNG, GIF (akan discale ke 2K)</div>
                 </div>
                 
                 <div class="button-group">
-                    <button class="btn-reset" onclick="resetBackground()">🔄 Reset Default</button>
-                    <button class="btn-capture" onclick="captureResult()">📸 Capture 2K</button>
+                    <button class="btn-reset" onclick="resetBackground()">reset</button>
+                    <button class="btn-capture" onclick="captureResult()">capture</button>
                 </div>
             </div>
         </div>
 
         <!-- Orientation Guide -->
         <div class="orientation-guide">
-            <span>🔄</span> Putar ke landscape untuk tampilan optimal
+            <span>↻</span> landscape recommended
         </div>
     </div>
 
@@ -575,6 +646,7 @@
                 document.querySelector('.theme-btn:last-child').classList.add('active');
             }
             localStorage.setItem('theme', theme);
+            updateStatus(`theme: ${theme} mode`);
         }
 
         // Load saved theme
@@ -583,6 +655,55 @@
             setTheme('light');
         }
 
+        // ==================== RESET DEFAULT FUNCTIONS ====================
+        function resetBasicDefaults() {
+            document.getElementById('keyColor').value = '#00ff00';
+            keyColor = [0, 255, 0];
+            
+            document.getElementById('tolerance').value = '0.35';
+            tolerance = 0.35;
+            document.getElementById('toleranceValue').textContent = '0.35';
+            
+            document.getElementById('smoothness').value = '0.15';
+            smoothness = 0.15;
+            document.getElementById('smoothValue').textContent = '0.15';
+            
+            updateStatus("basic settings reset to default");
+            
+            const btn = event.target;
+            btn.style.transform = 'scale(0.95)';
+            setTimeout(() => btn.style.transform = 'scale(1)', 200);
+        }
+        
+        function resetAdvancedDefaults() {
+            document.getElementById('qualityMode').value = 'medium';
+            PROCESS_WIDTH = 1280;
+            PROCESS_HEIGHT = 720;
+            
+            document.getElementById('fpsLimit').value = '15';
+            fpsInterval = 1000 / 15;
+            
+            const oldCameraMode = document.getElementById('cameraMode').value;
+            document.getElementById('cameraMode').value = 'user';
+            
+            document.getElementById('flipMode').value = 'flip';
+            flipHorizontal = true;
+            
+            updateStatus("advanced settings reset to default");
+            
+            if (oldCameraMode !== 'user') {
+                if (webcam.srcObject) {
+                    webcam.srcObject.getTracks().forEach(track => track.stop());
+                }
+                isWebcamReady = false;
+                initWebcam();
+            }
+            
+            const btn = event.target;
+            btn.style.transform = 'scale(0.95)';
+            setTimeout(() => btn.style.transform = 'scale(1)', 200);
+        }
+        
         // ==================== DETEKSI MOBILE ====================
         const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
         const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
@@ -591,8 +712,8 @@
         const WIDTH = 2560;
         const HEIGHT = 1440;
         
-        let PROCESS_WIDTH = isMobile ? 1280 : 2560;
-        let PROCESS_HEIGHT = isMobile ? 720 : 1440;
+        let PROCESS_WIDTH = 1280;
+        let PROCESS_HEIGHT = 720;
         
         // ==================== INISIALISASI ====================
         const webcam = document.getElementById('webcam');
@@ -616,12 +737,12 @@
         let animationFrame = null;
         let lastProcessTime = 0;
         let fpsInterval = 1000 / 15;
-        let flipHorizontal = false;
+        let flipHorizontal = true;
         
         // ==================== FUNGSI ====================
         function updateStatus(message) {
             const statusEl = document.getElementById('status');
-            statusEl.textContent = `Status: ${message}`;
+            statusEl.textContent = `● ${message}`;
         }
         
         function switchTab(tabName, event) {
@@ -643,7 +764,7 @@
         // ==================== INISIALISASI WEBCAM ====================
         async function initWebcam() {
             try {
-                updateStatus("Mengakses kamera...");
+                updateStatus("initializing camera...");
                 
                 const cameraMode = document.getElementById('cameraMode').value;
                 const flipMode = document.getElementById('flipMode').value;
@@ -670,44 +791,45 @@
                     webcam.play()
                         .then(() => {
                             isWebcamReady = true;
-                            updateStatus("✅ Kamera siap - Portrait & Landscape supported");
+                            updateStatus("camera ready");
                         })
-                        .catch(e => updateStatus("Error: " + e.message));
+                        .catch(e => updateStatus("error: " + e.message));
                 };
                 
             } catch (err) {
-                updateStatus("❌ Gagal akses kamera: " + err.message);
+                updateStatus("camera access failed");
                 try {
                     const stream = await navigator.mediaDevices.getUserMedia({ video: true });
                     webcam.srcObject = stream;
-                    updateStatus("⚠️ Mode kompatibilitas aktif");
+                    updateStatus("compatibility mode");
                     isWebcamReady = true;
                 } catch (e) {
-                    updateStatus("❌ Tidak bisa akses kamera");
+                    updateStatus("cannot access camera");
                 }
             }
         }
         
         // ==================== RESET BACKGROUND ====================
         function resetBackground() {
+            // Minimalist gradient background
             const gradient = bgCtx.createLinearGradient(0, 0, WIDTH, HEIGHT);
-            gradient.addColorStop(0, '#667eea');
-            gradient.addColorStop(0.5, '#764ba2');
-            gradient.addColorStop(1, '#f093fb');
+            gradient.addColorStop(0, '#2a2a2a');
+            gradient.addColorStop(0.5, '#1a1a1a');
+            gradient.addColorStop(1, '#0a0a0a');
             
             bgCtx.fillStyle = gradient;
             bgCtx.fillRect(0, 0, WIDTH, HEIGHT);
             
-            bgCtx.fillStyle = 'white';
-            bgCtx.font = 'bold 48px Arial';
+            bgCtx.fillStyle = '#ffffff';
+            bgCtx.font = '300 36px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
             bgCtx.textAlign = 'center';
-            bgCtx.fillText('✨ Background 2K', WIDTH/2, HEIGHT/2);
-            bgCtx.font = '36px Arial';
-            bgCtx.fillStyle = 'rgba(255,255,255,0.8)';
-            bgCtx.fillText('Upload gambar untuk custom', WIDTH/2, HEIGHT/2 + 80);
+            bgCtx.fillText('minimalist background', WIDTH/2, HEIGHT/2);
+            bgCtx.font = '300 24px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
+            bgCtx.fillStyle = '#808080';
+            bgCtx.fillText('upload custom image', WIDTH/2, HEIGHT/2 + 60);
             
             backgroundImage = null;
-            updateStatus("Background direset ke default");
+            updateStatus("background reset");
         }
         
         // ==================== EVENT LISTENERS ====================
@@ -742,7 +864,6 @@
                 PROCESS_WIDTH = 640;
                 PROCESS_HEIGHT = 360;
             }
-            updateStatus(`Kualitas: ${quality}`);
         });
         
         document.getElementById('fpsLimit').addEventListener('change', (e) => {
@@ -771,7 +892,7 @@
                     img.onload = () => {
                         bgCtx.drawImage(img, 0, 0, WIDTH, HEIGHT);
                         backgroundImage = img;
-                        updateStatus("✅ Background uploaded");
+                        updateStatus("background uploaded");
                     };
                     img.src = event.target.result;
                 };
@@ -793,7 +914,6 @@
                 tempCanvas.height = PROCESS_HEIGHT;
                 const tempCtx = tempCanvas.getContext('2d');
                 
-                // Apply flip jika diperlukan
                 if (flipHorizontal) {
                     tempCtx.save();
                     tempCtx.scale(-1, 1);
@@ -865,7 +985,6 @@
                 return true;
                 
             } catch (error) {
-                console.error("Processing error:", error);
                 return false;
             }
         }
@@ -889,17 +1008,17 @@
                     link.href = url;
                     link.click();
                     URL.revokeObjectURL(url);
-                    updateStatus("✅ Gambar 2K berhasil dicapture!");
+                    updateStatus("captured");
                     
                     if (isMobile) {
                         setTimeout(() => {
-                            alert('✨ Gambar tersimpan!\nCek folder download Anda.');
+                            alert('image saved');
                         }, 100);
                     }
                 }, 'image/png', 0.95);
                 
             } catch (error) {
-                updateStatus("❌ Gagal capture");
+                updateStatus("capture failed");
             }
         };
         
@@ -907,6 +1026,8 @@
         window.resetBackground = resetBackground;
         window.switchTab = switchTab;
         window.setTheme = setTheme;
+        window.resetBasicDefaults = resetBasicDefaults;
+        window.resetAdvancedDefaults = resetAdvancedDefaults;
         
         // ==================== START ====================
         resetBackground();
